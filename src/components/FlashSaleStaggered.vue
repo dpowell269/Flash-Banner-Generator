@@ -2,10 +2,10 @@
 	<div id="app">
 	  <!-- Editor Section -->
 	  <section class="editor">
-		<h2>Flash Sale Staggered Banner Editor</h2>
+		<h2 style="text-align:center;">Flash Sale Staggered Banner Editor</h2>
 		<form @submit.prevent="generateHtml">
 		  <!-- Background Image -->
-		  <div>
+		  <div class="editable-fields">
 			<label for="background-image">Background Image URL:</label>
 			<input
 			  v-model="bannerConfig.backgroundImage"
@@ -16,42 +16,43 @@
 		  </div>
   
 		  <!-- Date Controls -->
-		  <div>
+		  <div class="editable-fields">
 			<label for="start-date">Start Date:</label>
 			<input v-model="bannerConfig.startDate" id="start-date" type="date" />
 			<input v-model="bannerConfig.startTime" id="start-time" type="time" />
 		  </div>
-		  <div>
+		  <div class="editable-fields">
 			<label for="end-date">End Date:</label>
 			<input v-model="bannerConfig.endDate" id="end-date" type="date" />
 			<input v-model="bannerConfig.endTime" id="end-time" type="time" />
 		  </div>
   
 		  <!-- Text Controls -->
-		  <div v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
+		  <div class="editable-fields" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
 			<label>Threshold {{ index + 1 }}</label>
 			<input v-model="threshold.title" placeholder="Title (e.g., 20% Off)" />
 			<input v-model="threshold.subtitle" placeholder="Subtitle (e.g., Spend £60)" />
 		  </div>
   
 		  <!-- Links & Misc -->
-		  <div>
+		  <div class="editable-fields">
 			<label for="background-link">Background Link:</label>
 			<input v-model="bannerConfig.backgroundLink" id="background-link" type="text" />
 		  </div>
-		  <div>
+		  <div class="editable-fields">
 			<label for="shop-link">Shop Button Link:</label>
 			<input v-model="bannerConfig.shopLink" id="shop-link" type="text" />
 		  </div>
-  
+		  <div class="editable-fields">
 		  <button type="button" @click="preview = true">Preview</button>
 		  <button type="submit">Export HTML</button>
+          </div>
 		</form>
 	  </section>
   
 	  <!-- Preview Section -->
 	  <section v-if="preview" class="preview">
-		<h2>Banner Preview</h2>
+		<h2 style="text-align: center;">Banner Preview</h2>
 		<section
 		  class="flash-sale"
 		  :class="{ 'hidden-component': !isWithinDateRange() }"
@@ -160,6 +161,14 @@ export default {
 
 
 <style>
+
+.editable-fields {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 15px;
+	padding-bottom:15px;
+}
 	.full-width-force {
 		width: 100% !important;
 		max-width: 1200px !important;
