@@ -29,10 +29,18 @@
   
 		  <!-- Text Controls -->
 		  <div class="editable-fields" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
-			<label>Threshold {{ index + 1 }}</label>
-			<input v-model="threshold.title" placeholder="Title (e.g., 20% Off)" />
-			<input v-model="threshold.subtitle" placeholder="Subtitle (e.g., Spend £60)" />
-		  </div>
+  <label>Threshold {{ index + 1 }}</label>
+  <input v-model="threshold.title" placeholder="Title (e.g., 20% Off)" />
+  
+  <label for="title-color">Title Color</label>
+  <input type="color" v-model="threshold.titleColor" id="title-color" />
+  
+  <input v-model="threshold.subtitle" placeholder="Subtitle (e.g., Spend £60)" />
+  
+  <label for="subtitle-color">Subtitle Color</label>
+  <input type="color" v-model="threshold.subtitleColor" id="subtitle-color" />
+</div>
+
   
 		  <!-- Links & Misc -->
 		  <div class="editable-fields">
@@ -46,14 +54,22 @@
 		
 		 <!-- T&Cs Editor -->
 		 <div class="editable-fields">
-          <label for="tcs">Terms and Conditions:</label>
-          <textarea
-            v-model="bannerConfig.termsAndConditions"
-            id="tcs"
-            placeholder="Enter terms and conditions"
-            rows="3"
-          ></textarea>
-        </div>
+  <label for="tcs">Terms and Conditions:</label>
+  <textarea
+    v-model="bannerConfig.termsAndConditions"
+    id="tcs"
+    placeholder="Enter terms and conditions"
+    rows="3"
+    
+  ></textarea>
+  
+  <label for="tcs-color">Text Color</label>
+  <input 
+    type="color" 
+    v-model="bannerConfig.tcsTextColor" 
+    id="tcs-color" 
+  /> 
+</div>
 
 		<!--  selected brands -->
 		<div class="editable-fields">
@@ -64,6 +80,12 @@
       type="text"
       placeholder="e.g., Ends 3rd December 9am"
     />
+	<label for="custom-text">Text Color</label>
+  <input 
+    type="color" 
+    v-model="bannerConfig.customTextColor" 
+    id="custom-text" 
+  /> 
   </div>
 <!-- custom ends date -->
 		<div class="editable-fields">
@@ -85,30 +107,33 @@
 	  <!-- Preview Section -->
 	  <section v-if="preview" class="preview">
       <h2 style="text-align: center;">Banner Preview</h2>
-      <section
-        class="flash-sale"
-        :class="{ 'hidden-component': !isWithinDateRange() }"
-        id="timed-flash-sale"
-      >
-        <div
-          class="flash-sale-container"
-          :style="{ backgroundImage: `url('${bannerConfig.backgroundImage}')` }"
-        >
-          <a :href="bannerConfig.backgroundLink" class="background-link"></a>
-          <div class="thresholds">
-            <div class="threshold" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
-              <h2>{{ threshold.title }}</h2>
-              <h3 :style="{ color: '#c5a842' }">{{ threshold.subtitle }}</h3>
-            </div>
-          </div>
-		  <p class="end-date">{{ bannerConfig.selectedBrands }}</p>
-          <p class="end-date">{{ bannerConfig.customEndsText }}</p>
-          <div class="shop-buttons">
-            <a :href="bannerConfig.shopLink" class="button">Shop All</a>
-          </div>
-          <p class="tcs">{{ bannerConfig.termsAndConditions }}</p>
-        </div>
-      </section>
+	  <section
+  class="flash-sale"
+  :class="{ 'hidden-component': !isWithinDateRange() }"
+  id="timed-flash-sale"
+>
+  <div
+    class="flash-sale-container"
+    :style="{ backgroundImage: `url('${bannerConfig.backgroundImage}')` }"
+  >
+    <a :href="bannerConfig.backgroundLink" class="background-link"></a>
+    <div class="thresholds">
+      <div class="threshold" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
+        <!-- Use titleColor for the title -->
+        <h2 :style="{ color: threshold.titleColor }">{{ threshold.title }}</h2>
+        
+        <!-- Use subtitleColor for the subtitle -->
+        <h3 :style="{ color: threshold.subtitleColor }">{{ threshold.subtitle }}</h3>
+      </div>
+    </div>
+    <p :style="{ color: bannerConfig.customTextColor }"class="end-date">{{ bannerConfig.selectedBrands }}</p>
+    <p class="end-date">{{ bannerConfig.customEndsText }}</p>
+    <div class="shop-buttons">
+      <a :href="bannerConfig.shopLink" class="button">Shop All</a>
+    </div>
+    <p :style="{ color: bannerConfig.tcsTextColor }" class="tcs">{{ bannerConfig.termsAndConditions }}</p>
+  </div>
+</section>
     </section>
   </div>
 </template>
@@ -121,7 +146,7 @@ export default {
       bannerConfig: {
         startDate: "2024-10-20",
         startTime: "17:00:00",
-        endDate: "2024-11-22",
+        endDate: "2024-12-22",
         endTime: "09:00:00",
         backgroundImage:
           "https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png",
@@ -129,11 +154,27 @@ export default {
         shopLink: "/offers/all-offers/special-offers/c/W30041",
         footerText: "ON SELECTED BRANDS",
 		termsAndConditions: "*T&Cs apply",
+		tcsTextColor: '#000000',
         thresholds: [
-          { title: "20% Off", subtitle: "When you spend £60" },
-          { title: "25% Off", subtitle: "When you spend £100" },
-          { title: "30% Off", subtitle: "When you spend £150" },
-        ],
+        { 
+          title: "20% Off", 
+          subtitle: "When you spend £60", 
+          titleColor: "#ff0000",  
+          subtitleColor: "#0000ff" 
+        },
+        { 
+          title: "25% Off", 
+          subtitle: "When you spend £100", 
+          titleColor: "#00ff00", 
+          subtitleColor: "#0000ff" 
+        },
+        { 
+          title: "30% Off", 
+          subtitle: "When you spend £150", 
+          titleColor: "white", 
+          subtitleColor: "red" 
+        },
+],
 		selectedBrands: "Selected Brands",
 		customEndsText: "Ends 4pm 28th November",
       },
