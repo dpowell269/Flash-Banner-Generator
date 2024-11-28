@@ -21,7 +21,7 @@ const routes = [
     component: AboutPage,
   },
   {
-    path: '/sale',
+    path: '/staggered',
     name: 'flash staggered',
     component: FlashSaleStaggered,
   },
