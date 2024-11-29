@@ -13,6 +13,13 @@
 			  type="text"
 			  placeholder="Enter image URL"
 			/>
+			<label for="background-mobile-image">Mobile Image URL:</label>
+			<input
+			  v-model="bannerConfig.backgroundMobileImage"
+			  id="background-mobile-image"
+			  type="text"
+			  placeholder="Enter image URL"
+			/>
 		  </div>
   
 		  <!-- Date Controls -->
@@ -28,18 +35,21 @@
 		  </div>
   
 		  <!-- Text Controls -->
-		  <div class="editable-fields" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
-  <label>Threshold {{ index + 1 }}</label>
-  <input v-model="threshold.title" placeholder="Title (e.g., 20% Off)" />
-  
+		  <div class="editable-fields">
+  <div v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
+    <label>Threshold {{ index + 1 }}</label>
+    <input v-model="threshold.title" placeholder="Title (e.g., 20% Off)" />
+    <input v-model="threshold.subtitle" placeholder="Subtitle (e.g., Spend £60)" />
+  </div>
+
+  <!-- Shared Color Pickers -->
   <label for="title-color">Title Color</label>
-  <input type="color" v-model="threshold.titleColor" id="title-color" />
-  
-  <input v-model="threshold.subtitle" placeholder="Subtitle (e.g., Spend £60)" />
-  
+  <input type="color" v-model="bannerConfig.sharedStyles.titleColor" id="title-color" />
+
   <label for="subtitle-color">Subtitle Color</label>
-  <input type="color" v-model="threshold.subtitleColor" id="subtitle-color" />
+  <input type="color" v-model="bannerConfig.sharedStyles.subtitleColor" id="subtitle-color" />
 </div>
+
 
   
 		  <!-- Links & Misc -->
@@ -48,9 +58,23 @@
 			<input v-model="bannerConfig.backgroundLink" id="background-link" type="text" />
 		  </div>
 		  <div class="editable-fields">
-			<label for="shop-link">Shop Button Link:</label>
-			<input v-model="bannerConfig.shopLink" id="shop-link" type="text" />
-		  </div>
+  <label for="shop-link">Shop Button Link:</label>
+  <input v-model="bannerConfig.shopLink" id="shop-link" type="text" />
+
+  <label for="text-color">Text Color:</label>
+  <input type="color" v-model="bannerConfig.shopButtonStyles.textColor" id="text-color" />
+
+  <label for="border-color">Border Color:</label>
+  <input type="color" v-model="bannerConfig.shopButtonStyles.borderColor" id="border-color" />
+
+  <label for="background-color">Background Color:</label>
+  <input type="color" v-model="bannerConfig.shopButtonStyles.backgroundColor" id="background-color" />
+
+  <label for="hover-background-color">Hover Background Color:</label>
+  <input type="color" v-model="bannerConfig.shopButtonStyles.hoverBackgroundColor" id="hover-background-color" />
+  <label for="hover-background-color">Hover Text Color:</label>
+  <input type="color" v-model="bannerConfig.shopButtonStyles.hoverTextColor" id="hover-background-color" />
+</div>
 		
 		 <!-- T&Cs Editor -->
 		 <div class="editable-fields">
@@ -87,6 +111,7 @@
     id="custom-text" 
   /> 
   </div>
+
 <!-- custom ends date -->
 		<div class="editable-fields">
     <label for="custom-ends-text">Ends Date: </label>
@@ -112,25 +137,44 @@
   :class="{ 'hidden-component': !isWithinDateRange() }"
   id="timed-flash-sale"
 >
-  <div
+<div
     class="flash-sale-container"
-    :style="{ backgroundImage: `url('${bannerConfig.backgroundImage}')` }"
+    :style="{
+      '--background-image': `url('${bannerConfig.backgroundImage}')`,
+      '--background-mobile-image': `url('${bannerConfig.backgroundMobileImage}')`
+    }"
   >
     <a :href="bannerConfig.backgroundLink" class="background-link"></a>
-    <div class="thresholds">
+	<div class="thresholds">
+      
       <div class="threshold" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
-        <!-- Use titleColor for the title -->
-        <h2 :style="{ color: threshold.titleColor }">{{ threshold.title }}</h2>
-        
-        <!-- Use subtitleColor for the subtitle -->
-        <h3 :style="{ color: threshold.subtitleColor }">{{ threshold.subtitle }}</h3>
+        <h2 :style="{ color: bannerConfig.sharedStyles.titleColor }">
+          {{ threshold.title }}
+        </h2>
+        <h3 :style="{ color: bannerConfig.sharedStyles.subtitleColor }">
+          {{ threshold.subtitle }}
+        </h3>
       </div>
     </div>
     <p :style="{ color: bannerConfig.customTextColor }"class="end-date">{{ bannerConfig.selectedBrands }}</p>
-    <p class="end-date">{{ bannerConfig.customEndsText }}</p>
+    <p :style="{ color: bannerConfig.customTextColor }" class="end-date">{{ bannerConfig.customEndsText }}</p>
     <div class="shop-buttons">
-      <a :href="bannerConfig.shopLink" class="button">Shop All</a>
-    </div>
+  <a
+    :href="bannerConfig.shopLink"
+    class="button"
+    :style="{
+    '--hover-bg-color': bannerConfig.shopButtonStyles.hoverBackgroundColor,
+	'--hover-text-color': bannerConfig.shopButtonStyles.hoverTextColor,
+    color: bannerConfig.shopButtonStyles.textColor,
+    borderColor: bannerConfig.shopButtonStyles.borderColor,
+    '--background-color': bannerConfig.shopButtonStyles.backgroundColor,
+
+  }"
+   
+  >
+    Shop All
+  </a>
+</div>
     <p :style="{ color: bannerConfig.tcsTextColor }" class="tcs">{{ bannerConfig.termsAndConditions }}</p>
   </div>
 </section>
@@ -150,31 +194,38 @@ export default {
         endTime: "09:00:00",
         backgroundImage:
           "https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png",
+		  backgroundMobileImage: "https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-staggered-gold.jpg",
         backgroundLink: "/offers/all-offers/special-offers/c/W30041",
         shopLink: "/offers/all-offers/special-offers/c/W30041",
+		shopButtonStyles: {
+        textColor: "#ffffff", // Default text color
+        borderColor: "#c5a842", // Default border color
+        backgroundColor: "#000000", // Default background color
+        hoverBackgroundColor: "#ffffff",
+		hoverTextColor: "#ffffff" // Default hover background color
+      },
         footerText: "ON SELECTED BRANDS",
 		termsAndConditions: "*T&Cs apply",
-		tcsTextColor: '#000000',
+		tcsTextColor: '#fff',
         thresholds: [
         { 
           title: "20% Off", 
           subtitle: "When you spend £60", 
-          titleColor: "#ff0000",  
-          subtitleColor: "#0000ff" 
         },
         { 
           title: "25% Off", 
           subtitle: "When you spend £100", 
-          titleColor: "#00ff00", 
-          subtitleColor: "#0000ff" 
         },
         { 
           title: "30% Off", 
           subtitle: "When you spend £150", 
-          titleColor: "white", 
-          subtitleColor: "red" 
         },
+
 ],
+sharedStyles: {
+        titleColor: "#fff", // Global title color
+        subtitleColor: "#fff" // Global subtitle color
+      },
 		selectedBrands: "Selected Brands",
 		customEndsText: "Ends 4pm 28th November",
       },
@@ -241,7 +292,8 @@ export default {
 		align-items: center;
 		justify-content: center;
 		background-repeat: no-repeat;
-		background-image: url('https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png');
+		background-image: var(--bg-image);
+		background-image: url(${this.bannerConfig.backgroundMobileImage});
 		background-size: cover;
 		background-position-y: 0;
 		position: relative;
@@ -252,13 +304,14 @@ export default {
 		section.flash-sale .flash-sale-container {
 			background-size: cover;
 			background-position-y: 0px;
+			background-image: url(${this.bannerConfig.backgroundImage});
 		}
 	}
 
 	section.flash-sale .flash-sale-container h2 {
 		margin: 0 auto;
 		padding: 0;
-		color: #fff;
+		color: ${this.bannerConfig.sharedStyles.titleColor};
 		width: fit-content;
 		text-align: center;
 		box-sizing: border-box;
@@ -270,7 +323,7 @@ export default {
 	section.flash-sale .flash-sale-container h3 {
 		margin: 0 auto;
 		padding: 0;
-		color: #fff;
+		color: ${this.bannerConfig.sharedStyles.subtitleColor};
 		width: fit-content;
 		text-align: center;
 		box-sizing: border-box;
@@ -283,7 +336,7 @@ export default {
 	section.flash-sale .flash-sale-container p.end-date {
 		margin: 20px auto 0;
 		padding: 0;
-		color: #fff;
+		color: ${this.bannerConfig.customTextColor};
 		text-align: center;
 		font-family: Muli, arial, helvetica, sans-serif;
 		font-size: 14px;
@@ -298,7 +351,7 @@ export default {
 
 	section.flash-sale .flash-sale-container a.button {
 		display: block;
-		background: #000000;
+		background: ${this.bannerConfig.shopButtonStyles.backgroundColor};
 		width: 100%;
 		padding: 10px 25px;
 		box-sizing: border-box;
@@ -306,12 +359,12 @@ export default {
 		margin: 20px auto 0 auto;
 		border-radius: 4px;
 		text-decoration: none;
-		color: #ffffff;
+		color: ${this.bannerConfig.shopButtonStyles.textColor};
 		font-family: Muli, arial, helvetica, sans-serif;
 		font-size: 14px;
 		text-transform: uppercase;
 		cursor: pointer;
-		border: solid 1px  #c5a842;
+		border: solid 1px  ${this.bannerConfig.shopButtonStyles.borderColor};
 		transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 0.15s;
@@ -335,15 +388,15 @@ export default {
 	}
 
 	section.flash-sale .flash-sale-container a.button:hover {
-		background: #ffffff;
-		color: #000000;
+		background: ${this.bannerConfig.shopButtonStyles.hoverBackgroundColor};
+		color: ${this.bannerConfig.shopButtonStyles.hoverTextColor};
 		cursor: pointer;
 	}
 
 	section.flash-sale .flash-sale-container p.tcs {
 		margin: 20px auto 0;
 		padding: 0;
-		color: #fff;
+		color: ${this.bannerConfig.tcsTextColor};
 		text-align: center;
 		font-family: Muli, arial, helvetica, sans-serif;
 		font-size: 10px;
@@ -417,7 +470,7 @@ export default {
  }
 </style>
         <section class="flash-sale hidden-component" id="timed-flash-sale">
-          <div class="flash-sale-container" style="background-image: url('${this.bannerConfig.backgroundImage}')">
+          <div class="flash-sale-container">
             <a href="${this.bannerConfig.backgroundLink}" class="background-link"></a>
             <div class="thresholds">
               ${this.bannerConfig.thresholds
@@ -425,7 +478,7 @@ export default {
                   (threshold) => `
                 <div class="threshold">
                   <h2>${threshold.title}</h2>
-                  <h3 style="color: #c5a842;">${threshold.subtitle}</h3>
+                  <h3>${threshold.subtitle}</h3>
                 </div>
               `
                 )
@@ -439,6 +492,26 @@ export default {
             <p class="tcs">${this.bannerConfig.termsAndConditions}</p>
           </div>
         </section>
+<sc` + `ript>
+      document.querySelector('section.flash-sale').parentNode.parentNode.parentNode.classList.add('full-width-force');
+	   document.querySelector('section.flash-sale').parentNode.parentNode.classList.add('full-width-force');
+
+	function showComponentBetweenDates(startDate, startTime, endDate, endTime) {
+		const now = new Date();
+		const start = new Date(startDate + 'T' + startTime);
+const end = new Date(endDate + 'T' + endTime);
+
+		const component = document.getElementById('timed-flash-sale');
+
+		if (now >= start && now <= end) {
+			component.classList.remove('hidden-component');
+		} else {
+			component.classList.add('hidden-component');
+		}
+	}
+
+	showComponentBetweenDates('${this.bannerConfig.startDate}', '${this.bannerConfig.startTime}', '${this.bannerConfig.endDate}', '${this.bannerConfig.endTime}');
+  </sc` + `ript>
 	
       `;
       const blob = new Blob([html], { type: "text/html" });
@@ -492,7 +565,8 @@ export default {
 		align-items: center;
 		justify-content: center;
 		background-repeat: no-repeat;
-		background-image: url('https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png');
+		background-image: var(--background-mobile-image);
+		/* background-image: url('https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png'); */
 		background-size: cover;
 		background-position-y: 0;
 		position: relative;
@@ -503,6 +577,7 @@ export default {
 		section.flash-sale .flash-sale-container {
 			background-size: cover;
 			background-position-y: 0px;
+			background-image: var(--background-image);
 		}
 	}
 
@@ -549,7 +624,7 @@ export default {
 
 	section.flash-sale .flash-sale-container a.button {
 		display: block;
-		background: #000000;
+		background: var(--background-color);
 		width: 100%;
 		padding: 10px 25px;
 		box-sizing: border-box;
@@ -586,10 +661,10 @@ export default {
 	}
 
 	section.flash-sale .flash-sale-container a.button:hover {
-		background: #ffffff;
-		color: #000000;
-		cursor: pointer;
-	}
+    background: var(--hover-bg-color);
+    color: var(--hover-text-color);  /* Updated to hover text color */
+    cursor: pointer;
+}
 
 	section.flash-sale .flash-sale-container p.tcs {
 		margin: 20px auto 0;
