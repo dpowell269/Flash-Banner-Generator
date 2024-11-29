@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div>
 	  <!-- Editor Section -->
 	  <section class="editor">
 		<h2 style="text-align:center;">Flash Sale Staggered Banner Editor</h2>
