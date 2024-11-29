@@ -121,6 +121,12 @@
       type="text"
       placeholder="e.g., Ends 3rd December 9am"
     />
+	<label for="custom-text">Text Color</label>
+  <input 
+    type="color" 
+    v-model="bannerConfig.customEndsColor" 
+    id="custom-text" 
+  /> 
   </div>
         <div class="editable-fields">
           <button type="button" @click="preview = true">Preview</button>
@@ -128,7 +134,7 @@
         </div>
       </form>
 	  </section>
-  
+
 	  <!-- Preview Section -->
 	  <section v-if="preview" class="preview">
       <h2 style="text-align: center;">Banner Preview</h2>
@@ -157,7 +163,7 @@
       </div>
     </div>
     <p :style="{ color: bannerConfig.customTextColor }"class="end-date">{{ bannerConfig.selectedBrands }}</p>
-    <p :style="{ color: bannerConfig.customTextColor }" class="end-date">{{ bannerConfig.customEndsText }}</p>
+    <p :style="{ color: bannerConfig.customEndsColor }" class="end-date">{{ bannerConfig.customEndsText }}</p>
     <div class="shop-buttons">
   <a
     :href="bannerConfig.shopLink"
@@ -165,7 +171,7 @@
     :style="{
     '--hover-bg-color': bannerConfig.shopButtonStyles.hoverBackgroundColor,
 	'--hover-text-color': bannerConfig.shopButtonStyles.hoverTextColor,
-    color: bannerConfig.shopButtonStyles.textColor,
+	'--text-color': bannerConfig.shopButtonStyles.textColor,
     borderColor: bannerConfig.shopButtonStyles.borderColor,
     '--background-color': bannerConfig.shopButtonStyles.backgroundColor,
 
@@ -179,6 +185,77 @@
   </div>
 </section>
     </section>
+
+	<!-- Mobile Preview Section -->
+	 <div class="box">
+    <div class="phone">
+      <div class="camera"></div>
+      <div class="speaker"></div>
+      <div class="screen">
+        
+      </div>
+      <div class="recent">
+        <div class="rc1"></div>
+        <div class="rc2"></div>
+      </div>
+      <div class="homebutton"></div>
+      <div class="back">
+        <div class="arrowbody"></div>
+        <div class="cover"></div>
+        <div class="arrowpoint"></div>
+      </div>
+    </div>
+  </div>
+	<section v-if="preview" class="mobile-preview">
+      <h2 style="text-align: center;">Mobile Preview</h2>
+	  <section
+  class="mobile-flash-sale"
+  :class="{ 'hidden-component': !isWithinDateRange() }"
+  id="timed-flash-sale"
+>
+<div
+    class="flash-sale-container"
+    :style="{
+      '--background-image': `url('${bannerConfig.backgroundImage}')`,
+      '--background-mobile-image': `url('${bannerConfig.backgroundMobileImage}')`
+    }"
+  >
+    <a :href="bannerConfig.backgroundLink" class="background-link"></a>
+	<div class="thresholds">
+      
+      <div class="threshold" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
+        <h2 :style="{ color: bannerConfig.sharedStyles.titleColor }">
+          {{ threshold.title }}
+        </h2>
+        <h3 :style="{ color: bannerConfig.sharedStyles.subtitleColor }">
+          {{ threshold.subtitle }}
+        </h3>
+      </div>
+    </div>
+    <p :style="{ color: bannerConfig.customTextColor }"class="end-date">{{ bannerConfig.selectedBrands }}</p>
+    <p :style="{ color: bannerConfig.customEndsColor }" class="end-date">{{ bannerConfig.customEndsText }}</p>
+    <div class="shop-buttons">
+  <a
+    :href="bannerConfig.shopLink"
+    class="button"
+    :style="{
+    '--hover-bg-color': bannerConfig.shopButtonStyles.hoverBackgroundColor,
+	'--hover-text-color': bannerConfig.shopButtonStyles.hoverTextColor,
+	'--text-color': bannerConfig.shopButtonStyles.textColor,
+    borderColor: bannerConfig.shopButtonStyles.borderColor,
+    '--background-color': bannerConfig.shopButtonStyles.backgroundColor,
+
+  }"
+   
+  >
+    Shop All
+  </a>
+</div>
+    <p :style="{ color: bannerConfig.tcsTextColor }" class="tcs">{{ bannerConfig.termsAndConditions }}</p>
+  </div>
+</section>
+    </section>
+
   </div>
 </template>
 
@@ -336,6 +413,16 @@ sharedStyles: {
 	section.flash-sale .flash-sale-container p.end-date {
 		margin: 20px auto 0;
 		padding: 0;
+		color: ${this.bannerConfig.customEndsColor};
+		text-align: center;
+		font-family: Muli, arial, helvetica, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+	}
+
+	section.flash-sale .flash-sale-container p.selected-brands {
+		margin: 20px auto 0;
+		padding: 0;
 		color: ${this.bannerConfig.customTextColor};
 		text-align: center;
 		font-family: Muli, arial, helvetica, sans-serif;
@@ -484,7 +571,7 @@ sharedStyles: {
                 )
                 .join("")}
             </div>
-			<p class="end-date">${this.bannerConfig.selectedBrands}</p>
+			<p class="selected-brands">${this.bannerConfig.selectedBrands}</p>
             <p class="end-date">${this.bannerConfig.customEndsText}</p>
             <div class="shop-buttons">
               <a href="${this.bannerConfig.shopLink}" class="button">Shop All</a>
@@ -529,7 +616,7 @@ const end = new Date(endDate + 'T' + endTime);
 
 .editable-fields {
 	display: flex;
-	justify-content: center;
+	justify-content: start;
 	align-items: center;
 	padding-top: 15px;
 	padding-bottom:15px;
@@ -616,6 +703,16 @@ const end = new Date(endDate + 'T' + endTime);
 		font-weight: 400;
 	}
 
+	section.flash-sale .flash-sale-container p.selected-brands {
+		margin: 20px auto 0;
+		padding: 0;
+		color: #fff;
+		text-align: center;
+		font-family: Muli, arial, helvetica, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+	}
+
 	section.flash-sale .flash-sale-container .shop-buttons {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -632,7 +729,7 @@ const end = new Date(endDate + 'T' + endTime);
 		margin: 20px auto 0 auto;
 		border-radius: 4px;
 		text-decoration: none;
-		color: #ffffff;
+		color: var(--text-color);
 		font-family: Muli, arial, helvetica, sans-serif;
 		font-size: 14px;
 		text-transform: uppercase;
@@ -704,6 +801,214 @@ const end = new Date(endDate + 'T' + endTime);
 	@media only screen and (min-width: 768px) {
 		section.flash-sale .flash-sale-container .thresholds {
 			grid-template-columns: 1fr 1fr 1fr;
+		}
+	}
+
+	@keyframes text-jump {
+		0% {
+			transform: translateY(0px);
+		}
+		10% {
+			transform: translateY(-10px);
+		}
+		20% {
+			transform: translateY(0px);
+		}
+		100% {
+			transform: translateY(0px);
+		}
+	}
+
+	@keyframes shine {
+		0% {
+			left: -100px;
+		}
+		20% {
+			left: 100%;
+		}
+		100% {
+			left: 100%;
+		}
+	}
+
+    a.background-link {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+ }
+
+
+ section.mobile-flash-sale {
+		background: #ffffff;
+		padding: 0 10px;
+		border-radius: 4px;
+		width: 100%;
+		max-width: 600px;
+		margin: auto;
+	}
+
+	section.mobile-flash-sale .flash-sale-container {
+		background: #ebe4dc;
+		border-radius: 4px;
+		width: 100%;
+		max-width: 1200px;
+		margin: 20px auto;
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background-repeat: no-repeat;
+		background-image: var(--background-mobile-image);
+		/* background-image: url('https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png'); */
+		background-size: cover;
+		background-position-y: 0;
+		position: relative;
+		text-decoration: none;
+	}
+
+	@media only screen and (min-width: 768px) {
+		section.mobile-flash-sale .flash-sale-container {
+			background-size: cover;
+			background-position-y: 0px;
+		}
+	}
+
+	section.mobile-flash-sale .flash-sale-container h2 {
+		margin: 0 auto;
+		padding: 0;
+		color: #fff;
+		width: fit-content;
+		text-align: center;
+		box-sizing: border-box;
+		font-family: DIN Condensed, DIN Condensed Bold, system-ui;
+		font-size: 48px;
+		text-transform: uppercase;
+	}
+
+	section.mobile-flash-sale .flash-sale-container h3 {
+		margin: 0 auto;
+		padding: 0;
+		color: #fff;
+		width: fit-content;
+		text-align: center;
+		box-sizing: border-box;
+		font-family: Mark My Words Clean, system-ui;
+		font-size: 21px;
+		font-weight: 400;
+        /* transform: rotate(-5deg); */
+	}
+
+	section.mobile-flash-sale .flash-sale-container p.end-date {
+		margin: 20px auto 0;
+		padding: 0;
+		color: #fff;
+		text-align: center;
+		font-family: Muli, arial, helvetica, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+	}
+
+	section.mobile-flash-sale .flash-sale-container p.selected-brands {
+		margin: 20px auto 0;
+		padding: 0;
+		color: #fff;
+		text-align: center;
+		font-family: Muli, arial, helvetica, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+	}
+
+	section.mobile-flash-sale .flash-sale-container .shop-buttons {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 10px;
+	}
+
+	section.mobile-flash-sale .flash-sale-container a.button {
+		display: block;
+		background: var(--background-color);
+		width: 100%;
+		padding: 10px 25px;
+		box-sizing: border-box;
+		text-align: center;
+		margin: 20px auto 0 auto;
+		border-radius: 4px;
+		text-decoration: none;
+		color: var(--text-color);
+		font-family: Muli, arial, helvetica, sans-serif;
+		font-size: 14px;
+		text-transform: uppercase;
+		cursor: pointer;
+		border: solid 1px  #c5a842;
+		transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 0.15s;
+		position: relative;
+		overflow: hidden;
+        z-index: 2;
+	}
+
+	section.mobile-flash-sale .flash-sale-container a.button:before {
+		content: '';
+		position: absolute;
+		width: 100px;
+		height: 100%;
+		background-image: linear-gradient(120deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0) 70%);
+		top: 0;
+		left: -100px;
+		animation-name: shine;
+		animation-duration: 4s;
+		animation-delay: 1.5s;
+		animation-iteration-count: infinite;
+	}
+
+	section.mobile-flash-sale .flash-sale-container a.button:hover {
+    background: var(--hover-bg-color);
+    color: var(--hover-text-color);  /* Updated to hover text color */
+    cursor: pointer;
+}
+
+	section.mobile-flash-sale .flash-sale-container p.tcs {
+		margin: 20px auto 0;
+		padding: 0;
+		color: #fff;
+		text-align: center;
+		font-family: Muli, arial, helvetica, sans-serif;
+		font-size: 10px;
+		font-weight: 400;
+		position: absolute;
+		bottom: 5px;
+		right: 5px;
+	}
+
+	section.mobile-flash-sale .flash-sale-container .thresholds {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 20px;
+		width: 100%;
+		max-width: 650px;
+	}
+
+	section.mobile-flash-sale .flash-sale-container .thresholds .threshold {
+		animation-name: text-jump;
+		animation-duration: 4s;
+		animation-iteration-count: infinite;
+	}
+
+	section.mobile-flash-sale .flash-sale-container .thresholds .threshold:nth-of-type(2) {
+		animation-delay: 0.5s;
+	}
+
+	section.mobile-flash-sale .flash-sale-container .thresholds .threshold:nth-of-type(3) {
+		animation-delay: 1s;
+	}
+
+	@media only screen and (min-width: 768px) {
+		section.mobile-flash-sale .flash-sale-container .thresholds {
+			grid-template-columns: unset;
 		}
 	}
 
