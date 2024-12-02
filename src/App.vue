@@ -1,8 +1,8 @@
 <template>
   <div>
     <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">Home</router-link>
+      <router-link to="/percentage-off">Percentage Off</router-link>
       <router-link to="/staggered">Staggered</router-link>
     </nav>
     <router-view />

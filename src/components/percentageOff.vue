@@ -2,7 +2,7 @@
 	<div>
 	  <!-- Editor Section -->
 	  <section class="editor">
-		<h2 style="text-align:center;">Flash Sale Staggered Banner Editor</h2>
+		<h2 style="text-align:center;">Percentage Off Sale  Banner Editor</h2>
 		<form @submit.prevent="generateHtml">
 		  <!-- Background Image -->
 		  <div class="editable-fields">
