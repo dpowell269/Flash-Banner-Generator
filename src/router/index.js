@@ -1,4 +1,4 @@
-import PercentageOff from '@/views/PercentageOffView.vue';
+import PercentageOff from '@/views/percentageOffView.vue';
 import Home from '@/views/HomePageView.vue';
 import StaggeredView from '../views/StaggeredView.vue';
 import {createRouter, createWebHistory} from 'vue-router';
