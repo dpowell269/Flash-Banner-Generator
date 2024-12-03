@@ -1,6 +1,6 @@
 import PercentageOff from '@/views/percentageOffView.vue';
 import Home from '@/views/HomePageView.vue';
-import StaggeredView from '../views/StaggeredView.vue';
+import StaggeredView from '@/views/StaggeredView.vue';
 import {createRouter, createWebHistory} from 'vue-router';
 import BrandCarousel from '@/components/BrandCarousel.vue';
 import NotFound from '@/views/NotFound.vue';
