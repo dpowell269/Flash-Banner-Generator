@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import PercentageOff from '@/components/PercentageOff.vue';
+import percentageOff from '@/components/percentageOff.vue';
 </script>
 
 <template>
 
 
     
-  <PercentageOff />
+  <percentageOff />
 </template>
   
   <style>
