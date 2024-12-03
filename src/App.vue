@@ -2,10 +2,9 @@
 	<div>
 		<nav>
 			<div class="container">
-				<router-link to="/">Home</router-link>
+				<router-link to="/about">Home</router-link>
 				<router-link to="/percentage-off">Percentage Off</router-link>
 				<router-link to="/staggered">Staggered</router-link>
-				<router-link to="/brand-carousel">Brand Carousel</router-link>
 			</div>
 		</nav>
 		<router-view class="main" />
