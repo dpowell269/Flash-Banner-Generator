@@ -2,92 +2,125 @@
 	<div>
 		<!-- Editor Section -->
 		<section class="editor">
-			<h2 style="text-align: center">Flash Sale Staggered Banner Editor</h2>
+			<h2>Flash Sale Staggered Banner Editor</h2>
 			<form @submit.prevent="generateHtml">
 				<!-- Background Image -->
 				<div class="editable-fields">
-					<label for="background-image">Background Image URL:</label>
-					<input v-model="bannerConfig.backgroundImage" id="background-image" type="text" placeholder="Enter image URL" />
-					<label for="background-mobile-image">Mobile Image URL:</label>
-					<input v-model="bannerConfig.backgroundMobileImage" id="background-mobile-image" type="text" placeholder="Enter image URL" />
+					<div class="label-input-group">
+						<label for="background-image">Background Image URL:</label>
+						<input v-model="bannerConfig.backgroundImage" id="background-image" type="text" placeholder="Enter image URL" />
+					</div>
+					<div class="label-input-group">
+						<label for="background-mobile-image">Mobile Image URL:</label>
+						<input v-model="bannerConfig.backgroundMobileImage" id="background-mobile-image" type="text" placeholder="Enter image URL" />
+					</div>
+					<div class="label-input-group">
+						<label for="background-link">Background Link:</label>
+						<input v-model="bannerConfig.backgroundLink" id="background-link" type="text" />
+					</div>
 				</div>
 
 				<!-- Date Controls -->
 				<div class="editable-fields">
-					<label for="start-date">Start Date:</label>
-					<input v-model="bannerConfig.startDate" id="start-date" type="date" />
-					<input v-model="bannerConfig.startTime" id="start-time" type="time" />
-				</div>
-				<div class="editable-fields">
-					<label for="end-date">End Date:</label>
-					<input v-model="bannerConfig.endDate" id="end-date" type="date" />
-					<input v-model="bannerConfig.endTime" id="end-time" type="time" />
+					<div class="label-input-group">
+						<label for="start-date">Start Date:</label>
+						<input v-model="bannerConfig.startDate" id="start-date" type="date" />
+						<input v-model="bannerConfig.startTime" id="start-time" type="time" />
+					</div>
+					<div class="label-input-group">
+						<label for="end-date">End Date:</label>
+						<input v-model="bannerConfig.endDate" id="end-date" type="date" />
+						<input v-model="bannerConfig.endTime" id="end-time" type="time" />
+					</div>
 				</div>
 
 				<!-- Text Controls -->
 				<div class="editable-fields">
 					<div v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
-						<label>Threshold {{ index + 1 }}</label>
-						<input v-model="threshold.title" placeholder="Title (e.g., 20% Off)" />
-						<input v-model="threshold.subtitle" placeholder="Subtitle (e.g., Spend £60)" />
+						<div class="label-input-group">
+							<label>Threshold {{ index + 1 }}</label>
+							<input v-model="threshold.title" placeholder="Title (e.g., 20% Off)" />
+							<input v-model="threshold.subtitle" placeholder="Subtitle (e.g., Spend £60)" />
+						</div>
+					</div>
 					</div>
 
+					<div class="editable-fields">
 					<!-- Shared Color Pickers -->
-					<label for="title-color">Title Color</label>
-					<input type="color" v-model="bannerConfig.sharedStyles.titleColor" id="title-color" />
-
-					<label for="subtitle-color">Subtitle Color</label>
-					<input type="color" v-model="bannerConfig.sharedStyles.subtitleColor" id="subtitle-color" />
-				</div>
-
-				<!-- Links & Misc -->
-				<div class="editable-fields">
-					<label for="background-link">Background Link:</label>
-					<input v-model="bannerConfig.backgroundLink" id="background-link" type="text" />
-				</div>
-				<div class="editable-fields">
-					<label for="shop-link">Shop Button Link:</label>
-					<input v-model="bannerConfig.shopLink" id="shop-link" type="text" />
-
-					<label for="text-color">Text Color:</label>
-					<input type="color" v-model="bannerConfig.shopButtonStyles.textColor" id="text-color" />
-
-					<label for="border-color">Border Color:</label>
-					<input type="color" v-model="bannerConfig.shopButtonStyles.borderColor" id="border-color" />
-
-					<label for="background-color">Background Color:</label>
-					<input type="color" v-model="bannerConfig.shopButtonStyles.backgroundColor" id="background-color" />
-
-					<label for="hover-background-color">Hover Background Color:</label>
-					<input type="color" v-model="bannerConfig.shopButtonStyles.hoverBackgroundColor" id="hover-background-color" />
-					<label for="hover-background-color">Hover Text Color:</label>
-					<input type="color" v-model="bannerConfig.shopButtonStyles.hoverTextColor" id="hover-background-color" />
-				</div>
-
-				<!-- T&Cs Editor -->
-				<div class="editable-fields">
-					<label for="tcs">Terms and Conditions:</label>
-					<textarea v-model="bannerConfig.termsAndConditions" id="tcs" placeholder="Enter terms and conditions" rows="3"></textarea>
-
-					<label for="tcs-color">Text Color</label>
-					<input type="color" v-model="bannerConfig.tcsTextColor" id="tcs-color" />
+					<div class="label-input-group">
+						<label for="title-color">Title Color</label>
+						<input type="color" v-model="bannerConfig.sharedStyles.titleColor" id="title-color" />
+					</div>
+					<div class="label-input-group">
+						<label for="subtitle-color">Subtitle Color</label>
+						<input type="color" v-model="bannerConfig.sharedStyles.subtitleColor" id="subtitle-color" />
+					</div>
 				</div>
 
 				<!--  selected brands -->
 				<div class="editable-fields">
-					<label for="custom-text">Selected Brands </label>
-					<input v-model="bannerConfig.selectedBrands" id="custom-text" type="text" placeholder="e.g., Ends 3rd December 9am" />
-					<label for="custom-text">Text Color</label>
-					<input type="color" v-model="bannerConfig.customTextColor" id="custom-text" />
+					<div class="label-input-group">
+						<label for="custom-text">Custom Text</label>
+						<input v-model="bannerConfig.selectedBrands" id="custom-text" type="text" placeholder="e.g., Ends 3rd December 9am" />
+					</div>
+					<div class="label-input-group">
+						<label for="custom-text">Custom Text Color</label>
+						<input type="color" v-model="bannerConfig.customTextColor" id="custom-text" />
+					</div>
 				</div>
 
 				<!-- custom ends date -->
 				<div class="editable-fields">
+					<div class="label-input-group">
 					<label for="custom-ends-text">Ends Date: </label>
 					<input v-model="bannerConfig.customEndsText" id="custom-ends-text" type="text" placeholder="e.g., Ends 3rd December 9am" />
-					<label for="custom-text">Text Color</label>
+				</div>
+					<div class="label-input-group">
+					<label for="custom-text">End Date Color</label>
 					<input type="color" v-model="bannerConfig.customEndsColor" id="custom-text" />
 				</div>
+				</div>
+
+				<!-- Links & Misc -->
+				<div class="editable-fields">
+					<div class="label-input-group">
+						<label for="shop-link">CTA Link:</label>
+						<input v-model="bannerConfig.shopLink" id="shop-link" type="text" />
+					</div>
+					<div class="label-input-group">
+						<label for="text-color">CTA Text Color:</label>
+						<input type="color" v-model="bannerConfig.shopButtonStyles.textColor" id="text-color" />
+					</div>
+					<div class="label-input-group">
+						<label for="border-color">CTA Border Color:</label>
+						<input type="color" v-model="bannerConfig.shopButtonStyles.borderColor" id="border-color" />
+					</div>
+					<div class="label-input-group">
+						<label for="background-color">CTA Background Color:</label>
+						<input type="color" v-model="bannerConfig.shopButtonStyles.backgroundColor" id="background-color" />
+					</div>
+					<div class="label-input-group">
+						<label for="hover-background-color">CTA Hover Background Color:</label>
+						<input type="color" v-model="bannerConfig.shopButtonStyles.hoverBackgroundColor" id="hover-background-color" />
+					</div>
+					<div class="label-input-group">
+						<label for="hover-background-color">CTA Hover Text Color:</label>
+						<input type="color" v-model="bannerConfig.shopButtonStyles.hoverTextColor" id="hover-background-color" />
+					</div>
+				</div>
+
+				<!-- T&Cs Editor -->
+				<div class="editable-fields">
+					<div class="label-input-group">
+					<label for="tcs">T&Cs:</label>
+					<input v-model="bannerConfig.termsAndConditions" id="tcs" placeholder="Enter terms and conditions" rows="3"></input>
+				</div>
+				<div class="label-input-group">
+					<label for="tcs-color">T&Cs Color</label>
+					<input type="color" v-model="bannerConfig.tcsTextColor" id="tcs-color" />
+				</div>
+				</div>
+
 				<div class="editable-fields">
 					<button type="button" @click="preview = true">Preview</button>
 					<button type="submit">Export HTML</button>
@@ -266,14 +299,6 @@ export default {
 			const html =
 				`
 	  <style>
-
-.editable-fields {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding-top: 15px;
-	padding-bottom:15px;
-}
 	.full-width-force {
 		width: 100% !important;
 		max-width: 1200px !important;
@@ -550,13 +575,6 @@ const end = new Date(endDate + 'T' + endTime);
 </script>
 
 <style scoped>
-.editable-fields {
-	display: flex;
-	justify-content: start;
-	align-items: center;
-	padding-top: 15px;
-	padding-bottom: 15px;
-}
 .full-width-force {
 	width: 100% !important;
 	max-width: 1200px !important;
