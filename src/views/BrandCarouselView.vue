@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import PercentageOff from '@/components/PercentageOff.vue';
+import BrandCarousel from '@/components/BrandCarousel.vue';
 </script>
 
 <template>
-
-
-    
-  <PercentageOff />
+  <BrandCarousel />
 </template>
   
   <style>

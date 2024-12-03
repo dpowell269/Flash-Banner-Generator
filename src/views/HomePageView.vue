@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "AboutPage",
+  name: "Home",
   data() {
     return {
       text: "Welcome to the flash sale generator ",

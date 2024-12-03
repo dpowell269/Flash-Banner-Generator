@@ -1,25 +1,38 @@
-import percentageOff from '@/views/percentageOffView.vue';
-import AboutPage from '@/views/AboutPageView.vue';
-import StaggeredView from '../views/staggeredView.vue';
+import PercentageOff from '@/views/PercentageOffView.vue';
+import Home from '@/views/HomePageView.vue';
+import StaggeredView from '../views/StaggeredView.vue';
 import {createRouter, createWebHistory} from 'vue-router';
+import BrandCarousel from '@/components/BrandCarousel.vue';
+import NotFound from '@/views/NotFound.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
 		{
-			path: '/percentage-off',
-			name: 'Percentage Off',
-			component: percentageOff,
+			path: '/',
+			name: 'Home',
+			component: Home,
 		},
 		{
-			path: '/about',
-			name: 'About',
-			component: AboutPage,
+			path: '/percentage-off',
+			name: 'Percentage Off',
+			component: PercentageOff,
 		},
+		
 		{
 			path: '/staggered',
 			name: 'Staggered',
 			component: StaggeredView,
+		},
+		{
+			path: '/brand-carousel',
+			name: 'Brand Carousel',
+			component: BrandCarousel,
+		},
+		{ 
+			path: "/:pathMatch(.*)*",
+			name: "NotFound",
+			component: NotFound 
 		},
 	],
 });
