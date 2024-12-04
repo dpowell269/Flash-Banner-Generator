@@ -36,14 +36,14 @@
 
 				<!-- Text Controls -->
 				<div class="editable-fields">
-					<div v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
-						<div class="label-input-group">
-							<label>Threshold {{ index + 1 }}</label>
-							<input v-model="threshold.title" placeholder="Title (e.g., 20% Off)" />
-							<input v-model="threshold.subtitle" placeholder="Subtitle (e.g., Spend £60)" />
-						</div>
-					</div>
-				</div>
+  <div v-if="bannerConfig.thresholds && bannerConfig.thresholds.length > 0">
+    <div class="label-input-group">
+      <label>Threshold</label>
+	  <input v-model="bannerConfig.thresholds[0].subtitle" placeholder="Subtitle (e.g., Member Exclusive)" />
+      <input v-model="bannerConfig.thresholds[0].title" placeholder="Title (e.g., 20% Off)" />
+    </div>
+  </div>
+</div>
 
 				<div class="editable-fields">
 					<!-- Shared Color Pickers -->
@@ -148,15 +148,17 @@
 				>
 					<a :href="bannerConfig.backgroundLink" class="background-link"></a>
 					<div class="thresholds">
-						<div class="threshold" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
-							<h2 :style="{color: bannerConfig.sharedStyles.titleColor}">
-								{{ threshold.title }}
-							</h2>
-							<h3 :style="{color: bannerConfig.sharedStyles.subtitleColor}">
-								{{ threshold.subtitle }}
-							</h3>
-						</div>
-					</div>
+						<h3 :style="{ color: bannerConfig.sharedStyles.subtitleColor }">
+      {{ bannerConfig.thresholds[0].subtitle }}
+    </h3>
+  <div class="threshold">
+	
+    <h2 :style="{ color: bannerConfig.sharedStyles.titleColor }">
+      {{ bannerConfig.thresholds[0].title }}
+    </h2>
+   
+  </div>
+</div>
 					<p :style="{color: bannerConfig.customTextColor}" class="end-date">{{ bannerConfig.customText }}</p>
 					<p :style="{color: bannerConfig.customEndsColor}" class="end-date">{{ bannerConfig.customEndsText }}</p>
 					<div class="shop-buttons">
@@ -180,23 +182,7 @@
 		</section>
 
 		<!-- Mobile Preview Section -->
-		<div class="box">
-			<div class="phone">
-				<div class="camera"></div>
-				<div class="speaker"></div>
-				<div class="screen"></div>
-				<div class="recent">
-					<div class="rc1"></div>
-					<div class="rc2"></div>
-				</div>
-				<div class="homebutton"></div>
-				<div class="back">
-					<div class="arrowbody"></div>
-					<div class="cover"></div>
-					<div class="arrowpoint"></div>
-				</div>
-			</div>
-		</div>
+	
 		<section v-if="preview" class="mobile-preview">
 			<h2 style="text-align: center">Mobile Preview</h2>
 			<section class="mobile-flash-sale" :class="{'hidden-component': !isWithinDateRange()}" id="timed-flash-sale">
@@ -209,15 +195,17 @@
 				>
 					<a :href="bannerConfig.backgroundLink" class="background-link"></a>
 					<div class="thresholds">
-						<div class="threshold" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
-							<h2 :style="{color: bannerConfig.sharedStyles.titleColor}">
-								{{ threshold.title }}
-							</h2>
-							<h3 :style="{color: bannerConfig.sharedStyles.subtitleColor}">
-								{{ threshold.subtitle }}
-							</h3>
-						</div>
-					</div>
+						<h3 :style="{ color: bannerConfig.sharedStyles.subtitleColor }">
+      {{ bannerConfig.thresholds[0].subtitle }}
+    </h3>
+  <div class="threshold">
+	
+    <h2 :style="{ color: bannerConfig.sharedStyles.titleColor }">
+      {{ bannerConfig.thresholds[0].title }}
+    </h2>
+   
+  </div>
+</div>
 					<p :style="{color: bannerConfig.customTextColor}" class="end-date">{{ bannerConfig.customText }}</p>
 					<p :style="{color: bannerConfig.customEndsColor}" class="end-date">{{ bannerConfig.customEndsText }}</p>
 					<div class="shop-buttons">
@@ -268,17 +256,10 @@ export default {
 				tcsTextColor: '#fff',
 				thresholds: [
 					{
-						title: '20% Off',
-						subtitle: 'When you spend £60',
+						title: '20% Off £60 spend ',
+						subtitle: 'Online Exclusive',
 					},
-					{
-						title: '25% Off',
-						subtitle: 'When you spend £100',
-					},
-					{
-						title: '30% Off',
-						subtitle: 'When you spend £150',
-					},
+					
 				],
 				sharedStyles: {
 					titleColor: '#fff', // Global title color
@@ -485,7 +466,7 @@ export default {
 
 	@media only screen and (min-width: 768px) {
 		section.flash-sale .flash-sale-container .thresholds {
-			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-columns: 1fr;
 		}
 	}
 
@@ -528,18 +509,13 @@ export default {
           <div class="flash-sale-container">
             <a href="${this.bannerConfig.backgroundLink}" class="background-link"></a>
             <div class="thresholds">
-              ${this.bannerConfig.thresholds
-					.map(
-						(threshold) => `
-                <div class="threshold">
-                  <h2>${threshold.title}</h2>
-                  <h3>${threshold.subtitle}</h3>
-                </div>
-              `
-					)
-					.join('')}
-            </div>
-			<p class="selected-brands">${this.bannerConfig.customText}</p>
+				${this.bannerConfig.thresholds[0]?.subtitle ? `<h3>${this.bannerConfig.thresholds[0].subtitle}</h3>` : ''}
+  <div class="threshold">
+   
+    <h2>${this.bannerConfig.thresholds[0]?.title || ''}</h2>
+  </div>
+</div>
+			${this.bannerConfig.customText ? `<p class="selected-brands">${this.bannerConfig.customText}</p>` : ''}
             <p class="end-date">${this.bannerConfig.customEndsText}</p>
             <div class="shop-buttons">
               <a href="${this.bannerConfig.shopLink}" class="button">Shop All</a>
@@ -761,7 +737,7 @@ section.flash-sale .flash-sale-container .thresholds .threshold:nth-of-type(3) {
 
 @media only screen and (min-width: 768px) {
 	section.flash-sale .flash-sale-container .thresholds {
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr;
 	}
 }
 
