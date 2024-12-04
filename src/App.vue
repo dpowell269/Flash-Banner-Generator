@@ -5,6 +5,8 @@
 				<router-link to="/">Home</router-link>
 				<router-link to="/percentage-off">Percentage Off</router-link>
 				<router-link to="/staggered">Staggered</router-link>
+				<router-link to="/carousel-banner">Carousel Banner</router-link>
+
 			</div>
 		</nav>
 		<router-view class="main" />

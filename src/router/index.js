@@ -2,6 +2,7 @@ import percentageOff from '@/views/percentageOffView.vue';
 import AboutPage from '@/views/AboutPageView.vue';
 import StaggeredView from '../views/staggeredView.vue';
 import {createRouter, createWebHistory} from 'vue-router';
+import CarouselBanner from '@/components/CarouselBanner.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
 			path: '/staggered',
 			name: 'Staggered',
 			component: StaggeredView,
+		},
+		{
+			path: '/carousel-banner',
+			name: 'Carousel Banner',
+			component: CarouselBanner,
 		},
 	],
 });
