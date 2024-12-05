@@ -88,6 +88,10 @@
 						<label for="shop-link">CTA Link:</label>
 						<input v-model="bannerConfig.shopLink" id="shop-link" type="text" />
 					</div>
+					<div class="label-input-group">
+						<label for="shop-link-text">Shop button Text</label>
+						<input v-model="bannerConfig.shopText" id="shop-link" type="text" />
+					</div>
 
 					<div class="label-input-group">
 						<label for="text-color">CTA Text Color:</label>
@@ -128,10 +132,60 @@
 					</div>
 				</div>
 
+				<!-- Sign up links -->
+
 				<div class="editable-fields">
-					<button type="button" @click="preview = true">Preview</button>
+					<div class="label-input-group">
+					<label for="signUp-link-text">Sign Up  Text:</label>
+					<input
+					v-model="bannerConfig.signUpLinkText"
+					id="signUp-link-text"
+					placeholder="Enter text"
+					/>
+				</div>
+				<div class="label-input-group">
+					<label for="signUp-color">Sign Up Color:</label>
+					<input type="color" v-model="bannerConfig.signUpColor" id="signUp-color" />
+				</div>
+				<div class="label-input-group">
+					<label for="signUp-link-url">Sign Up Link URL:</label>
+					<input
+					v-model="bannerConfig.signUpLinkUrl"
+					id="signUp-link-url"
+					type="text"
+					placeholder="Enter link URL"
+					/>
+				</div>
+				</div>
+
+				<!-- login -->
+
+				<div class="editable-fields">
+					<div class="label-input-group">
+					<label for="login-link-text">Login Text:</label>
+					<input
+					v-model="bannerConfig.loginLinkText"
+					id="login-link-text"
+					placeholder="Enter text"
+					/>
+				</div>
+				
+				<div class="label-input-group">
+					<label for="login-link-url">login Link URL:</label>
+					<input
+					v-model="bannerConfig.loginLinkUrl"
+					id="login-link-url"
+					type="text"
+					placeholder="Enter link URL"
+					/>
+				</div>
+				</div>
+
+
+				<div class="editable-fields">
 					<button type="submit">Export HTML</button>
 				</div>
+
 			</form>
 		</section>
 
@@ -159,7 +213,7 @@
    
   </div>
 </div>
-					<p :style="{color: bannerConfig.customTextColor}" class="end-date">{{ bannerConfig.customText }}</p>
+					<p :style="{color: bannerConfig.customTextColor}" class="selected-brands">{{ bannerConfig.customText }}</p>
 					<p :style="{color: bannerConfig.customEndsColor}" class="end-date">{{ bannerConfig.customEndsText }}</p>
 					<div class="shop-buttons">
 						<a
@@ -173,8 +227,27 @@
 								'--background-color': bannerConfig.shopButtonStyles.backgroundColor,
 							}"
 						>
-							Shop All
+							{{bannerConfig.shopText}}
 						</a>
+						<div 
+  class="member-links" 
+  v-if="bannerConfig.signUpLinkText || bannerConfig.loginLinkText"
+>
+  <a 
+    :href="bannerConfig.signUpLinkUrl" 
+    :style="{'--signUp-text-color': bannerConfig.signUpColor}" 
+    class="underline-link"
+  >
+    {{ bannerConfig.signUpLinkText }}
+  </a>
+  <a 
+    :href="bannerConfig.loginLinkUrl" 
+    :style="{'--signUp-text-color': bannerConfig.signUpColor}" 
+    class="underline-link"
+  >
+    {{ bannerConfig.loginLinkText }}
+  </a>
+</div>
 					</div>
 					<p :style="{color: bannerConfig.tcsTextColor}" class="tcs">{{ bannerConfig.termsAndConditions }}</p>
 				</div>
@@ -206,7 +279,7 @@
    
   </div>
 </div>
-					<p :style="{color: bannerConfig.customTextColor}" class="end-date">{{ bannerConfig.customText }}</p>
+					<p :style="{color: bannerConfig.customTextColor}" class="selected-brands">{{ bannerConfig.customText }}</p>
 					<p :style="{color: bannerConfig.customEndsColor}" class="end-date">{{ bannerConfig.customEndsText }}</p>
 					<div class="shop-buttons">
 						<a
@@ -220,8 +293,27 @@
 								'--background-color': bannerConfig.shopButtonStyles.backgroundColor,
 							}"
 						>
-							Shop All
+							{{bannerConfig.shopText}}
 						</a>
+						<div 
+  class="member-links" 
+  v-if="bannerConfig.signUpLinkText || bannerConfig.loginLinkText"
+>
+  <a 
+    :href="bannerConfig.signUpLinkUrl" 
+    :style="{'--signUp-text-color': bannerConfig.signUpColor}" 
+    class="underline-link"
+  >
+    {{ bannerConfig.signUpLinkText }}
+  </a>
+  <a 
+    :href="bannerConfig.loginLinkUrl" 
+    :style="{'--signUp-text-color': bannerConfig.signUpColor}" 
+    class="underline-link"
+  >
+    {{ bannerConfig.loginLinkText }}
+  </a>
+</div>
 					</div>
 					<p :style="{color: bannerConfig.tcsTextColor}" class="tcs">{{ bannerConfig.termsAndConditions }}</p>
 				</div>
@@ -244,16 +336,17 @@ export default {
 				backgroundMobileImage: 'https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-staggered-gold.jpg',
 				backgroundLink: '/offers/all-offers/special-offers/c/W30041',
 				shopLink: '/offers/all-offers/special-offers/c/W30041',
+				shopText: 'shop now',
 				shopButtonStyles: {
 					textColor: '#ffffff', // Default text color
 					borderColor: '#c5a842', // Default border color
 					backgroundColor: '#000000', // Default background color
 					hoverBackgroundColor: '#ffffff',
-					hoverTextColor: '#ffffff', // Default hover background color
+					hoverTextColor: '#000000', // Default hover background color
 				},
 				footerText: 'ON SELECTED BRANDS',
 				termsAndConditions: '*T&Cs apply',
-				tcsTextColor: '#fff',
+				tcsTextColor: '#ffffff',
 				thresholds: [
 					{
 						title: '20% Off £60 spend ',
@@ -262,11 +355,19 @@ export default {
 					
 				],
 				sharedStyles: {
-					titleColor: '#fff', // Global title color
-					subtitleColor: '#fff', // Global subtitle color
+					titleColor: '#ffffff', // Global title color
+					subtitleColor: '#ffffff', // Global subtitle color
 				},
 				customText: 'Selected Brands',
+				customTextColor: '#ffffff',
 				customEndsText: 'Ends 4pm 28th November',
+				customEndsColor: '#ffffff',
+				signUpLinkText: 'sign up',
+				signUpLinkUrl: '/login#signup',
+				signUpColor: '#ffffff',
+				loginLinkText: 'login',
+				loginLinkUrl: '/login',
+
 			},
 		};
 	},
@@ -370,7 +471,7 @@ export default {
 	}
 
 	section.flash-sale .flash-sale-container p.selected-brands {
-		margin: 20px auto 0;
+		margin: 0 auto;
 		padding: 0;
 		color: ${this.bannerConfig.customTextColor};
 		text-align: center;
@@ -504,6 +605,24 @@ export default {
   height: 100%;
   z-index: 1;
  }
+  section.flash-sale .flash-sale-container .member-links {
+		margin: 10px auto 0;
+		display: flex;
+		gap: 20px;
+		position: relative;
+		z-index: 1;
+	}
+
+	section.flash-sale .flash-sale-container .member-links .underline-link {
+		margin: 0px auto 0;
+		padding: 0;
+		color: ${this.bannerConfig.signUpColor};
+		text-align: center;
+		font-family: Muli, arial, helvetica, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+		text-decoration: underline;
+	}
 </style>
         <section class="flash-sale hidden-component" id="timed-flash-sale">
           <div class="flash-sale-container">
@@ -518,7 +637,11 @@ export default {
 			${this.bannerConfig.customText ? `<p class="selected-brands">${this.bannerConfig.customText}</p>` : ''}
             <p class="end-date">${this.bannerConfig.customEndsText}</p>
             <div class="shop-buttons">
-              <a href="${this.bannerConfig.shopLink}" class="button">Shop All</a>
+              <a href="${this.bannerConfig.shopLink}" class="button">${this.bannerConfig.shopText}</a>
+			  <div class="member-links">
+				<a class="underline-link" href="${this.bannerConfig.signUpLinkUrl}">${this.bannerConfig.signUpLinkText}</a>
+				<a class="underline-link" href="${this.bannerConfig.loginLinkUrl}">${this.bannerConfig.loginLinkText}</a>
+			  </div>
             </div>
             <p class="tcs">${this.bannerConfig.termsAndConditions}</p>
           </div>
@@ -590,7 +713,6 @@ section.flash-sale .flash-sale-container {
 	justify-content: center;
 	background-repeat: no-repeat;
 	background-image: var(--background-mobile-image);
-	/* background-image: url('https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png'); */
 	background-size: cover;
 	background-position-y: 0;
 	position: relative;
@@ -627,7 +749,6 @@ section.flash-sale .flash-sale-container h3 {
 	font-family: Mark My Words Clean, system-ui;
 	font-size: 21px;
 	font-weight: 400;
-	/* transform: rotate(-5deg); */
 }
 
 section.flash-sale .flash-sale-container p.end-date {
@@ -641,7 +762,7 @@ section.flash-sale .flash-sale-container p.end-date {
 }
 
 section.flash-sale .flash-sale-container p.selected-brands {
-	margin: 20px auto 0;
+	margin: 0 auto;
 	padding: 0;
 	color: #fff;
 	text-align: center;
@@ -776,6 +897,27 @@ a.background-link {
 	z-index: 1;
 }
 
+section.flash-sale .flash-sale-container .member-links {
+		margin: 10px auto 0;
+		display: flex;
+		gap: 20px;
+		position: relative;
+		z-index: 1;
+	}
+
+	section.flash-sale .flash-sale-container .member-links .underline-link {
+		margin: 0px auto 0;
+		padding: 0;
+		color: var(--signUp-text-color);
+		text-align: center;
+		font-family: Muli, arial, helvetica, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+		text-decoration: underline;
+	}
+
+	/* Mobile styles */
+
 section.mobile-flash-sale {
 	background: #ffffff;
 	padding: 0 10px;
@@ -848,7 +990,7 @@ section.mobile-flash-sale .flash-sale-container p.end-date {
 }
 
 section.mobile-flash-sale .flash-sale-container p.selected-brands {
-	margin: 20px auto 0;
+	margin: 0 auto;
 	padding: 0;
 	color: #fff;
 	text-align: center;
@@ -982,4 +1124,23 @@ a.background-link {
 	height: 100%;
 	z-index: 1;
 }
+
+section.mobile-flash-sale .flash-sale-container .member-links {
+		margin: 10px auto 0;
+		display: flex;
+		gap: 20px;
+		position: relative;
+		z-index: 1;
+	}
+
+	section.mobile-flash-sale .flash-sale-container .member-links .underline-link {
+		margin: 0px auto 0;
+		padding: 0;
+		color: var(--signUp-text-color);
+		text-align: center;
+		font-family: Muli, arial, helvetica, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+		text-decoration: underline;
+	}
 </style>
