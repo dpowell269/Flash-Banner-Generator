@@ -141,7 +141,7 @@
 
 					<div class="label-input-group">
 						<label for="tcs-color">T&Cs Color</label>
-						<input type="color" v-model="bannerConfig.tcsTextColor" id="tcs-color" />
+						<input type="color" v-model="bannerConfig.tcsTextColor"  id="tcs-color" />
 					</div>
 				</div>
 
@@ -236,11 +236,13 @@ export default {
 					borderColor: '#c5a842', // Default border color
 					backgroundColor: '#000000', // Default background color
 					hoverBackgroundColor: '#ffffff',
-					hoverTextColor: '#ffffff', // Default hover background color
+					hoverTextColor: '#000', // Default hover background color
 				},
 				footerText: 'ON SELECTED BRANDS',
 				termsAndConditions: '*T&Cs apply',
-				tcsTextColor: '#fff',
+				tcsTextColor: '#ffffff',
+                customTextColor: '#ffffff',
+                customEndsColor: '#ffffff',
 				thresholds: [
 					{
 						title: '20% Off £60 spend ',
@@ -249,16 +251,37 @@ export default {
 					
 				],
 				sharedStyles: {
-					titleColor: '#fff', // Global title color
-					subtitleColor: '#fff', // Global subtitle color
+					titleColor: '#fff', 
+					subtitleColor: '#fff',
 				},
                 brandImages: [
-          { src: 'https://media.theperfumeshop.com/medias/?context=bWFzdGVyfGJyYW5kLWltYWdlc3w4NTIzfGltYWdlL2pwZWd8YUdVNEwyaGlOeTg0T0RRek1qRTNPREk1T1RFNHxhYmI2NzkxZjkzZDQ3MWIzMGRjZThjZmFmN2UzYmZmY2I1OTZkMGEyNTVlYmZjY2RkYTkwMTdlYzllZGRhOTE4',
-           link: '/lancome' },
+          { src: 'https://media.theperfumeshop.com/medias/sys_master/brand-images/ha2/ha6/8918694330398/rabanne_logo_white/rabanne-logo-white.png',
+           link: '/rabanne/b/59'
+         },
            {
               src: "https://media.theperfumeshop.com/medias/?context=bWFzdGVyfGJyYW5kLWltYWdlc3w4NTIzfGltYWdlL2pwZWd8YUdVNEwyaGlOeTg0T0RRek1qRTNPREk1T1RFNHxhYmI2NzkxZjkzZDQ3MWIzMGRjZThjZmFmN2UzYmZmY2I1OTZkMGEyNTVlYmZjY2RkYTkwMTdlYzllZGRhOTE4",
               link: "/lancome/b/49",
-            }, // Initial placeholder for image objects
+            },
+            {
+              src: "https://media.theperfumeshop.com/medias/?context=bWFzdGVyfGJyYW5kLWltYWdlc3wxOTE3MnxpbWFnZS9qcGVnfGFESTBMMmd4Tmk4NE9EUXlOREU1TlRNMU9UQXl8ZTE3NmRkOWY2ODg1YzI5ODVmMWQxMjU0YjVkNDE5YzRmMTA5M2RlZDA1Nzk0MjkyZTA2NjUxZmZhNTI0NTk2MQ",
+              link: "/dolce",
+            },
+            {
+              src: "https://media.theperfumeshop.com/medias/?context=bWFzdGVyfGJyYW5kLWltYWdlc3wxMjgyMHxpbWFnZS9qcGVnfGFEazBMMmc1WlM4NE9EUXlOREl4TWpjeU5qQTJ8M2RhODhlMDA5ZDRjMzBiMTNiODBkNGVhN2E1OTMzMDUzNjI1MzExMjkwM2JiZDQ3ZWQwZTMyOWJiZDlkMzMxMw",
+              link: "/jimmy-choo",
+            },
+            {
+              src: "https://media.theperfumeshop.com/medias/?context=bWFzdGVyfGJyYW5kLWltYWdlc3wxMDE2NHxpbWFnZS9qcGVnfGFEaG1MMmhtTkM4NE9EUXlOREl3T0RFek9EVTB8MWU2NjI3YWQ5NTRhMTY4Mjk5YjY3YTRiNmEzYjI5ZWFjNWQ2YWExN2Y5YzZhN2JhN2E2NjMwNmE2NTA1OWY3Nw",
+              link: "/givenchy",
+            },
+            {
+              src: "https://media.theperfumeshop.com/medias/?context=bWFzdGVyfGJyYW5kLWltYWdlc3wxMDE2NHxpbWFnZS9qcGVnfGFEaG1MMmhtTkM4NE9EUXlOREl3T0RFek9EVTB8MWU2NjI3YWQ5NTRhMTY4Mjk5YjY3YTRiNmEzYjI5ZWFjNWQ2YWExN2Y5YzZhN2JhN2E2NjMwNmE2NTA1OWY3Nw",
+              link: "/givenchy",
+            },
+            {
+              src: "https://media.theperfumeshop.com/medias/sys_master/brand-images/h93/h2d/8904514175006/LOGOBNEW/LOGOBNEW.png",
+              link: "/versace",
+            },
         ],
 
 				customText: 'Selected Brands',
@@ -316,10 +339,10 @@ export default {
 		max-width: 1200px;
 		margin: 20px auto;
 		padding: 20px;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+		display: grid;
+		grid-template-columns: 1fr;
+        justify-content: center;
+        align-items: center;
 		background-repeat: no-repeat;
 		background-image: var(--bg-image);
 		background-image: url(${this.bannerConfig.backgroundMobileImage});
@@ -333,6 +356,7 @@ export default {
 		section.flash-sale .flash-sale-container {
 			background-size: cover;
 			background-position-y: 0px;
+            grid-template-columns: 1fr 1.5fr;
 			background-image: url(${this.bannerConfig.backgroundImage});
 		}
 	}
@@ -391,7 +415,7 @@ export default {
 	section.flash-sale .flash-sale-container a.button {
 		display: block;
 		background: ${this.bannerConfig.shopButtonStyles.backgroundColor};
-		width: 100%;
+		width: fit-content;
 		padding: 10px 25px;
 		box-sizing: border-box;
 		text-align: center;
@@ -507,24 +531,43 @@ export default {
   height: 100%;
   z-index: 1;
  }
+  section.flash-sale .flash-sale-container .brand-tile {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	section.flash-sale .flash-sale-container .visual {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	section.flash-sale .flash-sale-container .visual img {
+		width: 80%;
+		max-width: 200px;
+		display: block;
+		/* filter: invert(1); */
+	}
+
 </style>
         <section class="flash-sale hidden-component" id="timed-flash-sale">
           <div class="flash-sale-container">
             <a href="${this.bannerConfig.backgroundLink}" class="background-link"></a>
-            <div class="thresholds">
+            <div class="">
 				${this.bannerConfig.thresholds[0]?.subtitle ? `<h3>${this.bannerConfig.thresholds[0].subtitle}</h3>` : ''}
-  <div class="threshold">
+  
    
     <h2>${this.bannerConfig.thresholds[0]?.title || ''}</h2>
-  </div>
-</div>
+
+
 			${this.bannerConfig.customText ? `<p class="selected-brands">${this.bannerConfig.customText}</p>` : ''}
             <p class="end-date">${this.bannerConfig.customEndsText}</p>
-            <div class="shop-buttons">
+            
               <a href="${this.bannerConfig.shopLink}" class="button">Shop All</a>
-            </div>
+             </div>
             <p class="tcs">${this.bannerConfig.termsAndConditions}</p>
-          </div>
+         
            <div class="brandSplide splide">
             <div class="brand-container splide__track">
               <div class="splide__list">
@@ -540,6 +583,11 @@ export default {
           </div>
         </div>
         </section>
+
+        <sc` +
+				`ript src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js">
+                </sc` +
+				`ript>
 <sc` +
 				`ript>
       document.querySelector('section.flash-sale').parentNode.parentNode.parentNode.classList.add('full-width-force');
@@ -560,6 +608,21 @@ const end = new Date(endDate + 'T' + endTime);
 	}
 
 	showComponentBetweenDates('${this.bannerConfig.startDate}', '${this.bannerConfig.startTime}', '${this.bannerConfig.endDate}', '${this.bannerConfig.endTime}');
+
+    	new Splide('.splide.brandSplide', {
+		type: 'loop',
+		arrows: (boolean = false),
+		rewindByDrag: (boolean = true),
+		pagination: (boolean = false),
+		
+		perPage: (number = 3),
+		autoScroll: {
+			speed: 1,
+			autoStart: (boolean = true),
+			rewind: (boolean = true),
+			pauseOnFocus: (boolean = false),
+		},
+	}).mount(window.splide.Extensions);
   </sc` +
 				`ript>
 	
@@ -675,7 +738,7 @@ section.flash-sale .flash-sale-container .shop-buttons {
 section.flash-sale .flash-sale-container a.button {
 	display: block;
 	background: var(--background-color);
-	width: 100%;
+	width: git-content;
 	padding: 10px 25px;
 	box-sizing: border-box;
 	text-align: center;
@@ -791,4 +854,22 @@ a.background-link {
 	height: 100%;
 	z-index: 1;
 }
+section.flash-sale .flash-sale-container .brand-tile {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	section.flash-sale .flash-sale-container .visual {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	section.flash-sale .flash-sale-container .visual img {
+		width: 80%;
+		max-width: 200px;
+		display: block;
+		/* filter: invert(1); */
+	}
 </style>
