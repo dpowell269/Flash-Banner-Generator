@@ -4,6 +4,15 @@
 		<section class="editor">
 			<h2>Percentage Off Sale Banner Editor</h2>
 			<form @submit.prevent="generateHtml">
+
+			<!-- Unique ID -->
+			<div class="editable-fields">
+					
+					<!-- <div class="label-input-group">
+						<label for="unique-id">Unique ID</label>
+						<input v-model="bannerConfig.uniqueID" id="unique-id" type="text" />
+					</div> -->
+				</div>
 				<!-- Background Image -->
 				<div class="editable-fields">
 					<div class="label-input-group">
@@ -181,9 +190,8 @@
 				</div>
 				</div>
 
-
 				<div class="editable-fields">
-					<button type="submit">Export HTML</button>
+					<button type="submit" @click="handleExportClick">Export HTML</button>
 				</div>
 
 			</form>
@@ -192,7 +200,8 @@
 		<!-- Preview Section -->
 		<section v-if="preview" class="preview">
 			<h2 style="text-align: center">Banner Preview</h2>
-			<section class="flash-sale" :class="{'hidden-component': !isWithinDateRange()}" id="timed-flash-sale">
+			<section class="flash-sale" :class="{'hidden-component': !isWithinDateRange()}" :id="bannerConfig.uniqueID">
+
 				<div
 					class="flash-sale-container"
 					:style="{
@@ -258,7 +267,8 @@
 	
 		<section v-if="preview" class="mobile-preview">
 			<h2 style="text-align: center">Mobile Preview</h2>
-			<section class="mobile-flash-sale" :class="{'hidden-component': !isWithinDateRange()}" id="timed-flash-sale">
+			<section class="mobile-flash-sale" :class="{'hidden-component': !isWithinDateRange()}" :id="bannerConfig.uniqueID">
+
 				<div
 					class="flash-sale-container"
 					:style="{
@@ -328,6 +338,7 @@ export default {
 		return {
 			preview: true,
 			bannerConfig: {
+				uniqueID: 'flash-sale',
 				startDate: '2024-10-20',
 				startTime: '17:00:00',
 				endDate: '2024-12-22',
@@ -367,6 +378,7 @@ export default {
 				signUpColor: '#ffffff',
 				loginLinkText: 'login',
 				loginLinkUrl: '/login',
+				formattedDate: "",
 
 			},
 		};
@@ -384,6 +396,26 @@ export default {
 			const end = new Date(`${this.bannerConfig.endDate}T${this.bannerConfig.endTime}`);
 			return now >= start && now <= end;
 		},
+		handleExportClick() {
+			const now = new Date();
+
+// Extract parts of the date and time
+const day = now.toString().split(" ")[0]; // e.g., "Thu"
+const month = now.toString().split(" ")[1]; // e.g., "Dec"
+const date = now.getDate(); // e.g., 5
+const year = now.getFullYear(); // e.g., 2024
+let time = now.toTimeString().split(" ")[0]; // e.g., "16:06:43"
+
+// Replace ":" with "-" in the time
+time = time.replace(/:/g, "-"); // e.g., "16-06-43"
+
+// Format the output
+const formatted = [day, month, String(date).padStart(2, '0'), year, time].join("-").toLowerCase();
+this.bannerConfig.formattedDate = formatted;
+
+  },
+		
+		
 		generateHtml() {
 			const html =
 				`
@@ -624,7 +656,7 @@ export default {
 		text-decoration: underline;
 	}
 </style>
-        <section class="flash-sale hidden-component" id="timed-flash-sale">
+        <section class="flash-sale hidden-component" id="${this.bannerConfig.formattedDate}">
           <div class="flash-sale-container">
             <a href="${this.bannerConfig.backgroundLink}" class="background-link"></a>
             <div class="thresholds">
@@ -656,7 +688,7 @@ export default {
 		const start = new Date(startDate + 'T' + startTime);
 const end = new Date(endDate + 'T' + endTime);
 
-		const component = document.getElementById('timed-flash-sale');
+		const component = document.getElementById('${this.bannerConfig.formattedDate}');
 
 		if (now >= start && now <= end) {
 			component.classList.remove('hidden-component');
@@ -940,7 +972,6 @@ section.mobile-flash-sale .flash-sale-container {
 	justify-content: center;
 	background-repeat: no-repeat;
 	background-image: var(--background-mobile-image);
-	/* background-image: url('https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png'); */
 	background-size: cover;
 	background-position-y: 0;
 	position: relative;
@@ -976,7 +1007,6 @@ section.mobile-flash-sale .flash-sale-container h3 {
 	font-family: Mark My Words Clean, system-ui;
 	font-size: 21px;
 	font-weight: 400;
-	/* transform: rotate(-5deg); */
 }
 
 section.mobile-flash-sale .flash-sale-container p.end-date {
