@@ -94,12 +94,21 @@
 				<!-- Links & Misc -->
 				<div class="editable-fields">
 					<div class="label-input-group">
-						<label for="shop-link">CTA Link:</label>
-						<input v-model="bannerConfig.shopLink" id="shop-link" type="text" />
+						<label for="shop-link-text">Shop button One</label>
+						<input v-model="bannerConfig.shopText" id="shop-link" type="text" />
 					</div>
 					<div class="label-input-group">
-						<label for="shop-link-text">Shop button Text</label>
-						<input v-model="bannerConfig.shopText" id="shop-link" type="text" />
+						<label for="shop-link">CTA Link One:</label>
+						<input v-model="bannerConfig.shopLink" id="shop-link" type="text" />
+					</div>
+					
+					<div class="label-input-group">
+						<label for="shop-link-textt">Shop button Two</label>
+						<input v-model="bannerConfig.shopTextt" id="shop-linkt" type="text" />
+					</div>
+					<div class="label-input-group">
+						<label for="shop-link-two">CTA Link Two:</label>
+						<input v-model="bannerConfig.shopLinkTwo" id="shop-link-two" type="text" />
 					</div>
 
 					<div class="label-input-group">
@@ -224,8 +233,12 @@
 </div>
 					<p :style="{color: bannerConfig.customTextColor}" class="selected-brands">{{ bannerConfig.customText }}</p>
 					<p :style="{color: bannerConfig.customEndsColor}" class="end-date">{{ bannerConfig.customEndsText }}</p>
-					<div class="shop-buttons">
+					<div
+  class="shop-buttons"
+  :style="{ '--grid-template-columns': bannerConfig.shopTextt ? '1fr 1fr' : '1fr' }"
+>
 						<a
+						v-if="bannerConfig.shopText.trim() !== ''"
 							:href="bannerConfig.shopLink"
 							class="button"
 							:style="{
@@ -238,7 +251,23 @@
 						>
 							{{bannerConfig.shopText}}
 						</a>
-						<div 
+						<a
+						v-if="bannerConfig.shopTextt.trim() !== ''"
+							:href="bannerConfig.shopLinkTwo"
+							class="button"
+							:style="{
+								'--hover-bg-color': bannerConfig.shopButtonStyles.hoverBackgroundColor,
+								'--hover-text-color': bannerConfig.shopButtonStyles.hoverTextColor,
+								'--text-color': bannerConfig.shopButtonStyles.textColor,
+								borderColor: bannerConfig.shopButtonStyles.borderColor,
+								'--background-color': bannerConfig.shopButtonStyles.backgroundColor,
+							}"
+						>
+							{{bannerConfig.shopTextt}}
+						</a>
+	
+					</div>
+					<div 
   class="member-links" 
   v-if="bannerConfig.signUpLinkText || bannerConfig.loginLinkText"
 >
@@ -257,7 +286,6 @@
     {{ bannerConfig.loginLinkText }}
   </a>
 </div>
-					</div>
 					<p :style="{color: bannerConfig.tcsTextColor}" class="tcs">{{ bannerConfig.termsAndConditions }}</p>
 				</div>
 			</section>
@@ -291,8 +319,12 @@
 </div>
 					<p :style="{color: bannerConfig.customTextColor}" class="selected-brands">{{ bannerConfig.customText }}</p>
 					<p :style="{color: bannerConfig.customEndsColor}" class="end-date">{{ bannerConfig.customEndsText }}</p>
-					<div class="shop-buttons">
+					<div
+  class="shop-buttons"
+  :style="{ '--grid-template-columns': bannerConfig.shopTextt ? '1fr 1fr' : '1fr' }"
+>
 						<a
+						v-if="bannerConfig.shopText.trim() !== ''"
 							:href="bannerConfig.shopLink"
 							class="button"
 							:style="{
@@ -305,26 +337,44 @@
 						>
 							{{bannerConfig.shopText}}
 						</a>
-						<div 
+						<a
+						v-if="bannerConfig.shopTextt.trim() !== ''"
+							:href="bannerConfig.shopLinkTwo"
+							
+							class="button"
+							:style="{
+								'--hover-bg-color': bannerConfig.shopButtonStyles.hoverBackgroundColor,
+								'--hover-text-color': bannerConfig.shopButtonStyles.hoverTextColor,
+								'--text-color': bannerConfig.shopButtonStyles.textColor,
+								borderColor: bannerConfig.shopButtonStyles.borderColor,
+								'--background-color': bannerConfig.shopButtonStyles.backgroundColor,
+							}"
+						>
+							{{bannerConfig.shopTextt}}
+						</a>
+
+					</div>
+					<div 
   class="member-links" 
   v-if="bannerConfig.signUpLinkText || bannerConfig.loginLinkText"
 >
+<a 
+  v-if="bannerConfig.signUpLinkText" 
+  :href="bannerConfig.signUpLinkUrl" 
+  :style="{'--signUp-text-color': bannerConfig.signUpColor}" 
+  class="underline-link"
+>
+  {{ bannerConfig.signUpLinkText }}
+</a>
   <a 
-    :href="bannerConfig.signUpLinkUrl" 
-    :style="{'--signUp-text-color': bannerConfig.signUpColor}" 
-    class="underline-link"
-  >
-    {{ bannerConfig.signUpLinkText }}
-  </a>
-  <a 
-    :href="bannerConfig.loginLinkUrl" 
-    :style="{'--signUp-text-color': bannerConfig.signUpColor}" 
-    class="underline-link"
-  >
-    {{ bannerConfig.loginLinkText }}
-  </a>
+  v-if="bannerConfig.loginLinkText" 
+  :href="bannerConfig.loginLinkUrl" 
+  :style="{'--signUp-text-color': bannerConfig.signUpColor}" 
+  class="underline-link"
+>
+  {{ bannerConfig.loginLinkText }}
+</a>
 </div>
-					</div>
 					<p :style="{color: bannerConfig.tcsTextColor}" class="tcs">{{ bannerConfig.termsAndConditions }}</p>
 				</div>
 			</section>
@@ -347,7 +397,10 @@ export default {
 				backgroundMobileImage: 'https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-staggered-gold.jpg',
 				backgroundLink: '/offers/all-offers/special-offers/c/W30041',
 				shopLink: '/offers/all-offers/special-offers/c/W30041',
+				shopLinkTwo: '/mens/offers',
 				shopText: 'shop now',
+				shopTextt: 'shop all',
+
 				shopButtonStyles: {
 					textColor: '#ffffff', // Default text color
 					borderColor: '#c5a842', // Default border color
@@ -415,8 +468,9 @@ this.bannerConfig.formattedDate = formatted;
 
   },
 		
-		
+ 
 		generateHtml() {
+			const gridTemplateColumns = this.bannerConfig.shopTextt ? '1fr 1fr' : '1fr';
 			const html =
 				`
 	  <style>
@@ -514,8 +568,14 @@ this.bannerConfig.formattedDate = formatted;
 
 	section.flash-sale .flash-sale-container .shop-buttons {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: ${gridTemplateColumns};
 		gap: 10px;
+	}
+
+	@media screen and (max-width: 678px) {
+	section.flash-sale .flash-sale-container .shop-buttons {
+	grid-template-columns: 1fr;
+	}
 	}
 
 	section.flash-sale .flash-sale-container a.button {
@@ -669,12 +729,15 @@ this.bannerConfig.formattedDate = formatted;
 			${this.bannerConfig.customText ? `<p class="selected-brands">${this.bannerConfig.customText}</p>` : ''}
             <p class="end-date">${this.bannerConfig.customEndsText}</p>
             <div class="shop-buttons">
-              <a href="${this.bannerConfig.shopLink}" class="button">${this.bannerConfig.shopText}</a>
-			  <div class="member-links">
-				<a class="underline-link" href="${this.bannerConfig.signUpLinkUrl}">${this.bannerConfig.signUpLinkText}</a>
-				<a class="underline-link" href="${this.bannerConfig.loginLinkUrl}">${this.bannerConfig.loginLinkText}</a>
-			  </div>
+             ${this.bannerConfig.shopText ? `<a href="${this.bannerConfig.shopLink}" class="button">${this.bannerConfig.shopText}</a>` : ''}
+             ${this.bannerConfig.shopTextt ? `<a href="${this.bannerConfig.shopLinkTwo}" class="button">${this.bannerConfig.shopTextt}</a>` : ''}
+
+			  
             </div>
+			<div class="member-links">
+				${this.bannerConfig.signUpLinkText ? `<a class="underline-link" href="${this.bannerConfig.signUpLinkUrl}">${this.bannerConfig.signUpLinkText}</a>` : '' }
+				${this.bannerConfig.loginLinkText ? `<a class="underline-link" href="${this.bannerConfig.loginLinkUrl}">${this.bannerConfig.loginLinkText}</a>` : '' }
+			  </div>
             <p class="tcs">${this.bannerConfig.termsAndConditions}</p>
           </div>
         </section>
@@ -805,7 +868,7 @@ section.flash-sale .flash-sale-container p.selected-brands {
 
 section.flash-sale .flash-sale-container .shop-buttons {
 	display: grid;
-	grid-template-columns: 1fr;
+	grid-template-columns: var(--grid-template-columns, 1fr);
 	gap: 10px;
 }
 
