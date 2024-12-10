@@ -70,7 +70,7 @@
 				<!--  selected brands -->
 				<div class="editable-fields">
 					<div class="label-input-group">
-						<label for="custom-text">Custom Text</label>
+						<label for="custom-text">Custom Text: (Optional)</label>
 						<input v-model="bannerConfig.customText" id="custom-text" type="text" placeholder="e.g. Selected Brands" />
 					</div>
 					<div class="label-input-group">
@@ -94,8 +94,8 @@
 				<!-- Links & Misc -->
 				<div class="editable-fields">
 					<div class="label-input-group">
-						<label for="shop-link-text">Shop button One</label>
-						<input v-model="bannerConfig.shopText" id="shop-link" type="text" />
+						<label for="shop-link-text">Shop button One *(Mandotary)</label>
+						<input v-model="bannerConfig.shopText" id="shop-link" type="text" placeholder="shop all or shop mens" />
 					</div>
 					<div class="label-input-group">
 						<label for="shop-link">CTA Link One:</label>
@@ -103,11 +103,11 @@
 					</div>
 					
 					<div class="label-input-group">
-						<label for="shop-link-textt">Shop button Two</label>
-						<input v-model="bannerConfig.shopTextt" id="shop-linkt" type="text" />
+						<label for="shop-link-textt">Shop Button Two: (Optional)</label>
+						<input v-model="bannerConfig.shopTextt" id="shop-linkt" type="text" placeholder="shop womens" />
 					</div>
 					<div class="label-input-group">
-						<label for="shop-link-two">CTA Link Two:</label>
+						<label for="shop-link-two">CTA Link Two: (Optional)</label>
 						<input v-model="bannerConfig.shopLinkTwo" id="shop-link-two" type="text" />
 					</div>
 
@@ -154,7 +154,7 @@
 
 				<div class="editable-fields">
 					<div class="label-input-group">
-					<label for="signUp-link-text">Sign Up  Text:</label>
+					<label for="signUp-link-text">Sign Up  Text: (Optional)</label>
 					<input
 					v-model="bannerConfig.signUpLinkText"
 					id="signUp-link-text"
@@ -166,7 +166,7 @@
 					<input type="color" v-model="bannerConfig.signUpColor" id="signUp-color" />
 				</div>
 				<div class="label-input-group">
-					<label for="signUp-link-url">Sign Up Link URL:</label>
+					<label for="signUp-link-url">Sign Up Link URL: (Optional)</label>
 					<input
 					v-model="bannerConfig.signUpLinkUrl"
 					id="signUp-link-url"
@@ -180,7 +180,7 @@
 
 				<div class="editable-fields">
 					<div class="label-input-group">
-					<label for="login-link-text">Login Text:</label>
+					<label for="login-link-text">Login Text: (Optional)</label>
 					<input
 					v-model="bannerConfig.loginLinkText"
 					id="login-link-text"
@@ -189,7 +189,7 @@
 				</div>
 				
 				<div class="label-input-group">
-					<label for="login-link-url">login Link URL:</label>
+					<label for="login-link-url">login Link URL: (Optional)</label>
 					<input
 					v-model="bannerConfig.loginLinkUrl"
 					id="login-link-url"
@@ -547,7 +547,7 @@ this.bannerConfig.formattedDate = formatted;
 	}
 
 	section.flash-sale .flash-sale-container p.end-date {
-		margin: 20px auto 0;
+		margin: 0 auto;
 		padding: 0;
 		color: ${this.bannerConfig.customEndsColor};
 		text-align: center;
