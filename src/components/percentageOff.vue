@@ -768,7 +768,7 @@ const end = new Date(endDate + 'T' + endTime);
 			const blob = new Blob([html], {type: 'text/html'});
 			const link = document.createElement('a');
 			link.href = URL.createObjectURL(blob);
-			link.download = 'flash-sale-banner.html';
+			link.download = 'flash-sale-percentage-off.html';
 			link.click();
 		},
 	},

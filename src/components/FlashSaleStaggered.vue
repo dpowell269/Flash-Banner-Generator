@@ -34,6 +34,18 @@
 					</div>
 				</div>
 
+			<!--  Title  -->
+			<div class="editable-fields">
+					<div class="label-input-group">
+						<label for="title">Title</label>
+						<input v-model="bannerConfig.titleTitle" id="title-title" type="text" placeholder="e.g., Member Exclusive " />
+					</div>
+					<div class="label-input-group">
+						<label for="title-title">Title Color: </label>
+						<input type="color" v-model="bannerConfig.titleTitleColor" id="title-title" />
+					</div>
+				</div>
+
 				<!-- Text Controls -->
 				<div class="editable-fields">
 					<div v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
@@ -122,8 +134,8 @@
 				</div>
 
 				<div class="editable-fields">
-					<button type="button" @click="preview = true">Preview</button>
-					<button type="submit">Export HTML</button>
+					
+					<button type="submit" @click="handleExportClick">Export HTML</button>
 				</div>
 			</form>
 		</section>
@@ -138,8 +150,12 @@
 						'--background-image': `url('${bannerConfig.backgroundImage}')`,
 						'--background-mobile-image': `url('${bannerConfig.backgroundMobileImage}')`,
 					}"
+					
+					
 				>
 					<a :href="bannerConfig.backgroundLink" class="background-link"></a>
+					<h3 class="title-members" :style="{color: bannerConfig.titleTitleColor}">{{bannerConfig.titleTitle}}</h3>
+							
 					<div class="thresholds">
 						<div class="threshold" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
 							<h2 :style="{color: bannerConfig.sharedStyles.titleColor}">
@@ -173,23 +189,7 @@
 		</section>
 
 		<!-- Mobile Preview Section -->
-		<div class="box">
-			<div class="phone">
-				<div class="camera"></div>
-				<div class="speaker"></div>
-				<div class="screen"></div>
-				<div class="recent">
-					<div class="rc1"></div>
-					<div class="rc2"></div>
-				</div>
-				<div class="homebutton"></div>
-				<div class="back">
-					<div class="arrowbody"></div>
-					<div class="cover"></div>
-					<div class="arrowpoint"></div>
-				</div>
-			</div>
-		</div>
+		
 		<section v-if="preview" class="mobile-preview">
 			<h2 style="text-align: center">Mobile Preview</h2>
 			<section class="mobile-flash-sale" :class="{'hidden-component': !isWithinDateRange()}" id="timed-flash-sale">
@@ -200,7 +200,10 @@
 						'--background-mobile-image': `url('${bannerConfig.backgroundMobileImage}')`,
 					}"
 				>
+				
+
 					<a :href="bannerConfig.backgroundLink" class="background-link"></a>
+					<h3 class="title-members" :style="{color: bannerConfig.titleTitleColor}">{{bannerConfig.titleTitle}}</h3>
 					<div class="thresholds">
 						<div class="threshold" v-for="(threshold, index) in bannerConfig.thresholds" :key="index">
 							<h2 :style="{color: bannerConfig.sharedStyles.titleColor}">
@@ -254,11 +257,16 @@ export default {
 					borderColor: '#c5a842', // Default border color
 					backgroundColor: '#000000', // Default background color
 					hoverBackgroundColor: '#ffffff',
-					hoverTextColor: '#ffffff', // Default hover background color
+					hoverTextColor: '#000000', // Default hover background color
 				},
 				footerText: 'ON SELECTED BRANDS',
 				termsAndConditions: '*T&Cs apply',
-				tcsTextColor: '#fff',
+				tcsTextColor: '#ffffff',
+				customTextColor: '#ffffff',
+				customEndsColor: '#ffffff',
+				titleTitle: "Member Exclusive",
+				titleTitleColor: '#ffffff',
+
 				thresholds: [
 					{
 						title: '20% Off',
@@ -274,12 +282,31 @@ export default {
 					},
 				],
 				sharedStyles: {
-					titleColor: '#fff', // Global title color
-					subtitleColor: '#fff', // Global subtitle color
+					titleColor: '#ffffff', // Global title color
+					subtitleColor: '#ffffff', // Global subtitle color
 				},
 				selectedBrands: 'Selected Brands',
 				customEndsText: 'Ends 4pm 28th November',
+				formattedDate: "",
 			},
+			handleExportClick() {
+			const now = new Date();
+
+// Extract parts of the date and time
+const day = now.toString().split(" ")[0]; // e.g., "Thu"
+const month = now.toString().split(" ")[1]; // e.g., "Dec"
+const date = now.getDate(); // e.g., 5
+const year = now.getFullYear(); // e.g., 2024
+let time = now.toTimeString().split(" ")[0]; // e.g., "16:06:43"
+
+// Replace ":" with "-" in the time
+time = time.replace(/:/g, "-"); // e.g., "16-06-43"
+
+// Format the output
+const formatted = [day, month, String(date).padStart(2, '0'), year, time].join("-").toLowerCase();
+this.bannerConfig.formattedDate = formatted;
+
+  },
 		};
 	},
 	computed: {
@@ -516,10 +543,15 @@ export default {
   height: 100%;
   z-index: 1;
  }
+  .title-members {
+	padding-bottom: 20px !important;
+}
 </style>
-        <section class="flash-sale hidden-component" id="timed-flash-sale">
+        <section class="flash-sale hidden-component" id="${this.bannerConfig.formattedDate}">
           <div class="flash-sale-container">
             <a href="${this.bannerConfig.backgroundLink}" class="background-link"></a>
+					<h3 style="margin-bottom: 20px;color: white">${this.bannerConfig.titleTitle}</h3>
+
             <div class="thresholds">
               ${this.bannerConfig.thresholds
 					.map(
@@ -550,7 +582,7 @@ export default {
 		const start = new Date(startDate + 'T' + startTime);
 const end = new Date(endDate + 'T' + endTime);
 
-		const component = document.getElementById('timed-flash-sale');
+		const component = document.getElementById('${this.bannerConfig.formattedDate}');
 
 		if (now >= start && now <= end) {
 			component.classList.remove('hidden-component');
@@ -567,7 +599,7 @@ const end = new Date(endDate + 'T' + endTime);
 			const blob = new Blob([html], {type: 'text/html'});
 			const link = document.createElement('a');
 			link.href = URL.createObjectURL(blob);
-			link.download = 'flash-sale-banner.html';
+			link.download = 'flash-sale-staggered.html';
 			link.click();
 		},
 	},
@@ -998,5 +1030,9 @@ a.background-link {
 	width: 100%;
 	height: 100%;
 	z-index: 1;
+}
+
+.title-members {
+	padding-bottom: 20px !important;
 }
 </style>
