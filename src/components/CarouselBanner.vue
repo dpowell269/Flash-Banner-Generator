@@ -147,7 +147,7 @@
 
 				<div class="editable-fields">
 					
-					<button type="submit">Export HTML</button>
+					<button type="submit" @click="handleExportClick">Export HTML</button>
 				</div>
 			</form>
 		</section>
@@ -241,8 +241,6 @@ export default {
 				footerText: 'ON SELECTED BRANDS',
 				termsAndConditions: '*T&Cs apply',
 				tcsTextColor: '#ffffff',
-                customTextColor: '#ffffff',
-                customEndsColor: '#ffffff',
 				thresholds: [
 					{
 						title: '20% Off £60 spend ',
@@ -251,8 +249,8 @@ export default {
 					
 				],
 				sharedStyles: {
-					titleColor: '#fff', 
-					subtitleColor: '#fff',
+					titleColor: '#ffffff', 
+					subtitleColor: '#ffffff',
 				},
                 brandImages: [
           { src: 'https://media.theperfumeshop.com/medias/sys_master/brand-images/ha2/ha6/8918694330398/rabanne_logo_white/rabanne-logo-white.png',
@@ -275,10 +273,6 @@ export default {
               link: "/givenchy",
             },
             {
-              src: "https://media.theperfumeshop.com/medias/?context=bWFzdGVyfGJyYW5kLWltYWdlc3wxMDE2NHxpbWFnZS9qcGVnfGFEaG1MMmhtTkM4NE9EUXlOREl3T0RFek9EVTB8MWU2NjI3YWQ5NTRhMTY4Mjk5YjY3YTRiNmEzYjI5ZWFjNWQ2YWExN2Y5YzZhN2JhN2E2NjMwNmE2NTA1OWY3Nw",
-              link: "/givenchy",
-            },
-            {
               src: "https://media.theperfumeshop.com/medias/sys_master/brand-images/h93/h2d/8904514175006/LOGOBNEW/LOGOBNEW.png",
               link: "/versace",
             },
@@ -286,7 +280,28 @@ export default {
 
 				customText: 'Selected Brands',
 				customEndsText: 'Ends 4pm 28th November',
+				customTextColor: '#ffffff',
+                customEndsColor: '#ffffff',
+				formattedDate: "",
 			},
+			handleExportClick() {
+			const now = new Date();
+
+// Extract parts of the date and time
+const day = now.toString().split(" ")[0]; // e.g., "Thu"
+const month = now.toString().split(" ")[1]; // e.g., "Dec"
+const date = now.getDate(); // e.g., 5
+const year = now.getFullYear(); // e.g., 2024
+let time = now.toTimeString().split(" ")[0]; // e.g., "16:06:43"
+
+// Replace ":" with "-" in the time
+time = time.replace(/:/g, "-"); // e.g., "16-06-43"
+
+// Format the output
+const formatted = [day, month, String(date).padStart(2, '0'), year, time].join("-").toLowerCase();
+this.bannerConfig.formattedDate = formatted;
+
+  },
          
 		};
 	},
@@ -551,7 +566,7 @@ export default {
 	}
 
 </style>
-        <section class="flash-sale hidden-component" id="timed-flash-sale">
+       <section class="flash-sale hidden-component" id="${this.bannerConfig.formattedDate}">
           <div class="flash-sale-container">
             <a href="${this.bannerConfig.backgroundLink}" class="background-link"></a>
             <div class="">
@@ -598,7 +613,7 @@ export default {
 		const start = new Date(startDate + 'T' + startTime);
 const end = new Date(endDate + 'T' + endTime);
 
-		const component = document.getElementById('timed-flash-sale');
+		const component = document.getElementById('${this.bannerConfig.formattedDate}');
 
 		if (now >= start && now <= end) {
 			component.classList.remove('hidden-component');
@@ -630,7 +645,7 @@ const end = new Date(endDate + 'T' + endTime);
 			const blob = new Blob([html], {type: 'text/html'});
 			const link = document.createElement('a');
 			link.href = URL.createObjectURL(blob);
-			link.download = 'flash-sale-banner.html';
+			link.download = 'rotating-banner.html';
 			link.click();
 		},
 	},
