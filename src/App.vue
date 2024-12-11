@@ -74,6 +74,7 @@ input {
 	border: solid 1px #d1d5dc;
 	border-radius: 6px;
 	padding: 6px 12px;
+	margin: 5px 0;
 }
 
 /* input[type='color'] {
