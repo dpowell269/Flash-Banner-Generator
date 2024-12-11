@@ -214,10 +214,111 @@
 			</form>
 		</section>
 
-		<!-- Preview Section -->
+		<!-- Preview Section Desktop -->
 		<section v-if="preview" class="preview">
 			<h2 style="text-align: center">Banner Preview</h2>
 			<section class="flash-sale" :class="{'hidden-component': !isWithinDateRange()}" id="timed-flash-sale">
+				<div
+					class="flash-sale-container"
+					:style="{
+						'--background-image': `url('${bannerConfig.backgroundImage}')`,
+						'--background-mobile-image': `url('${bannerConfig.backgroundMobileImage}')`,
+					}"
+				>
+					<a :href="bannerConfig.backgroundLink" class="background-link"></a>
+					<div class="carousel-center">
+						<h3 :style="{ color: bannerConfig.sharedStyles.subtitleColor }">
+                         {{ bannerConfig.thresholds[0].subtitle }}
+                                    </h3>
+                        <h2 :style="{ color: bannerConfig.sharedStyles.titleColor }">
+                              {{ bannerConfig.thresholds[0].title }}
+                         </h2>
+
+                             <p :style="{color: bannerConfig.customTextColor}" class="selected-brands">{{ bannerConfig.customText }}</p>
+				        	<p :style="{color: bannerConfig.customEndsColor}" class="end-date">{{ bannerConfig.customEndsText }}</p>
+							<div
+  class="shop-buttons"
+  :style="{ '--grid-template-columns': bannerConfig.shopTextt ? '1fr 1fr' : '1fr' }"
+>
+						<a
+						v-if="bannerConfig.shopText.trim() !== ''"
+							:href="bannerConfig.shopLink"
+							class="button"
+							:style="{
+								'--hover-bg-color': bannerConfig.shopButtonStyles.hoverBackgroundColor,
+								'--hover-text-color': bannerConfig.shopButtonStyles.hoverTextColor,
+								'--text-color': bannerConfig.shopButtonStyles.textColor,
+								borderColor: bannerConfig.shopButtonStyles.borderColor,
+								'--background-color': bannerConfig.shopButtonStyles.backgroundColor,
+							}"
+						>
+							{{bannerConfig.shopText}}
+						</a>
+						<a
+						v-if="bannerConfig.shopTextt.trim() !== ''"
+							:href="bannerConfig.shopLinkTwo"
+							class="button"
+							:style="{
+								'--hover-bg-color': bannerConfig.shopButtonStyles.hoverBackgroundColor,
+								'--hover-text-color': bannerConfig.shopButtonStyles.hoverTextColor,
+								'--text-color': bannerConfig.shopButtonStyles.textColor,
+								borderColor: bannerConfig.shopButtonStyles.borderColor,
+								'--background-color': bannerConfig.shopButtonStyles.backgroundColor,
+							}"
+						>
+							{{bannerConfig.shopTextt}}
+						</a>
+	
+					</div>
+					<div 
+  class="member-links" 
+  v-if="bannerConfig.signUpLinkText || bannerConfig.loginLinkText"
+>
+  <a 
+    :href="bannerConfig.signUpLinkUrl" 
+    :style="{'--signUp-text-color': bannerConfig.signUpColor}" 
+    class="underline-link"
+  >
+    {{ bannerConfig.signUpLinkText }}
+  </a>
+  <a 
+    :href="bannerConfig.loginLinkUrl" 
+    :style="{'--signUp-text-color': bannerConfig.signUpColor}" 
+    class="underline-link"
+  >
+    {{ bannerConfig.loginLinkText }}
+  </a>
+</div>
+                  
+              
+                </div>
+                <div class="brandSplide splide">
+              <div class="brand-container splide__track">
+                <div class="splide__list">
+                  <div
+                    class="brand-tile splide__slide"
+                    v-for="(image, index) in bannerConfig.brandImages"
+                    :key="index"
+                  >
+                    <a :href="image.link" class="visual">
+                      <img :src="image.src" alt="" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+                
+					
+					<p :style="{color: bannerConfig.tcsTextColor}" class="tcs">{{ bannerConfig.termsAndConditions }}</p>
+				</div>
+			</section>
+		</section>
+
+		<!-- Preview Mobile -->
+
+		<section v-if="preview" class="preview">
+			<h2 style="text-align: center">Mobile Preview</h2>
+			<section class="mobile-flash-sale" :class="{'hidden-component': !isWithinDateRange()}" id="timed-flash-sale">
 				<div
 					class="flash-sale-container"
 					:style="{
@@ -684,7 +785,7 @@ this.bannerConfig.formattedDate = formatted;
 
 	section.flash-sale .flash-sale-container .member-links .underline-link {
 		margin: 0px auto 0;
-		padding: 0;
+		padding-bottom: 10px;
 		color: ${this.bannerConfig.signUpColor};
 		text-align: center;
 		font-family: Muli, arial, helvetica, sans-serif;
@@ -697,7 +798,12 @@ this.bannerConfig.formattedDate = formatted;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;}
+	align-items: center;
+	}
+
+	.t${this.bannerConfig.formattedDate} {
+	z-index: 1;
+	}
 
 </style>
        <section class="flash-sale hidden-component" id="${this.bannerConfig.formattedDate}">
@@ -724,7 +830,7 @@ this.bannerConfig.formattedDate = formatted;
              </div>
             <p class="tcs">${this.bannerConfig.termsAndConditions}</p>
          
-           <div class="brandSplide splide">
+           <div class="t${this.bannerConfig.formattedDate} splide">
             <div class="brand-container splide__track">
               <div class="splide__list">
                 ${this.bannerConfig.brandImages.map(image => `
@@ -765,7 +871,7 @@ const end = new Date(endDate + 'T' + endTime);
 
 	showComponentBetweenDates('${this.bannerConfig.startDate}', '${this.bannerConfig.startTime}', '${this.bannerConfig.endDate}', '${this.bannerConfig.endTime}');
 
-    	new Splide('.splide.brandSplide', {
+    	new Splide('.splide.t${this.bannerConfig.formattedDate}', {
 		type: 'loop',
 		arrows: (boolean = false),
 		rewindByDrag: (boolean = true),
@@ -1038,6 +1144,248 @@ section.flash-sale .flash-sale-container .brand-tile {
 	}
 
 	section.flash-sale .flash-sale-container .member-links .underline-link {
+		margin: 0px auto 0;
+		padding: 0;
+		color: var(--signUp-text-color);
+		text-align: center;
+		font-family: Muli, arial, helvetica, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+		text-decoration: underline;
+	}
+
+	.carousel-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	}
+
+
+	/* Mobile Styles */
+
+
+
+section.mobile-flash-sale {
+	background: #ffffff;
+	padding: 0 10px;
+	border-radius: 4px;
+	width: 100%;
+	max-width: 600px;
+	margin: auto;
+}
+
+section.mobile-flash-sale .flash-sale-container {
+	background: #ebe4dc;
+	border-radius: 4px;
+	width: 100%;
+	max-width: 1200px;
+	margin: 20px auto;
+	padding: 20px;
+	display: flex;
+	display: grid;
+    grid-template-columns: 1fr;
+	background-repeat: no-repeat;
+	background-image: var(--background-mobile-image);
+	/* background-image: url('https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png'); */
+	background-size: cover;
+	background-position-y: 0;
+	position: relative;
+	text-decoration: none;
+}
+
+section.mobile-flash-sale .flash-sale-container h2 {
+	margin: 0 auto;
+	padding: 0;
+	color: #fff;
+	width: fit-content;
+	text-align: center;
+	box-sizing: border-box;
+	font-family: DIN Condensed, DIN Condensed Bold, system-ui;
+	font-size: 48px;
+	text-transform: uppercase;
+}
+
+section.mobile-flash-sale .flash-sale-container h3 {
+	margin: 0 auto;
+	padding-bottom: 5px;
+	color: #fff;
+	width: fit-content;
+	text-align: center;
+	box-sizing: border-box;
+	font-family: Mark My Words Clean, system-ui;
+	font-size: 21px;
+	font-weight: 400;
+	/* transform: rotate(-5deg); */
+}
+
+section.mobile-flash-sale .flash-sale-container p.end-date {
+	margin: 0 auto;
+	padding-bottom: 15px;
+	color: #fff;
+	text-align: center;
+	font-family: Muli, arial, helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+section.mobile-flash-sale .flash-sale-container p.selected-brands {
+	margin: 0 auto;
+	padding-bottom: 10px;
+	color: #fff;
+	text-align: center;
+	font-family: Muli, arial, helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+section.mobile-flash-sale .flash-sale-container .shop-buttons {
+	display: grid;
+	grid-template-columns: var(--grid-template-columns, 1fr);
+	gap: 10px;
+}
+
+section.mobile-flash-sale .flash-sale-container a.button {
+	display: block;
+	background: var(--background-color);
+	width: git-content;
+	padding: 10px 25px;
+	box-sizing: border-box;
+	text-align: center;
+	margin: 0 auto;
+	border-radius: 4px;
+	text-decoration: none;
+	color: var(--text-color);
+	font-family: Muli, arial, helvetica, sans-serif;
+	font-size: 14px;
+	text-transform: uppercase;
+	cursor: pointer;
+	border: solid 1px #c5a842;
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 0.15s;
+	position: relative;
+	overflow: hidden;
+	z-index: 2;
+}
+
+section.mobile-flash-sale .flash-sale-container a.button:before {
+	content: '';
+	position: absolute;
+	width: 100px;
+	height: 100%;
+	background-image: linear-gradient(120deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0) 70%);
+	top: 0;
+	left: -100px;
+	animation-name: shine;
+	animation-duration: 4s;
+	animation-delay: 1.5s;
+	animation-iteration-count: infinite;
+}
+
+section.mobile-flash-sale .flash-sale-container a.button:hover {
+	background: var(--hover-bg-color);
+	color: var(--hover-text-color); /* Updated to hover text color */
+	cursor: pointer;
+}
+
+section.mobile-flash-sale .flash-sale-container p.tcs {
+	margin: 0 auto;
+	padding: 0;
+	color: #fff;
+	text-align: center;
+	font-family: Muli, arial, helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: 400;
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+}
+
+section.mobile-flash-sale .flash-sale-container .thresholds {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 20px;
+	width: 100%;
+	max-width: 650px;
+}
+
+section.mobile-flash-sale .flash-sale-container .thresholds .threshold {
+	animation-name: text-jump;
+	animation-duration: 4s;
+	animation-iteration-count: infinite;
+}
+
+section.mobile-flash-sale .flash-sale-container .thresholds .threshold:nth-of-type(2) {
+	animation-delay: 0.5s;
+}
+
+section.mobile-flash-sale .flash-sale-container .thresholds .threshold:nth-of-type(3) {
+	animation-delay: 1s;
+}
+
+@media only screen and (min-width: 768px) {
+	section.mobile-flash-sale .flash-sale-container .thresholds {
+		grid-template-columns: 1fr;
+	}
+}
+
+@keyframes text-jump {
+	0% {
+		transform: translateY(0px);
+	}
+	10% {
+		transform: translateY(-10px);
+	}
+	20% {
+		transform: translateY(0px);
+	}
+	100% {
+		transform: translateY(0px);
+	}
+}
+
+@keyframes shine {
+	0% {
+		left: -100px;
+	}
+	20% {
+		left: 100%;
+	}
+	100% {
+		left: 100%;
+	}
+}
+
+
+section.mobile-flash-sale .flash-sale-container .brand-tile {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	section.mobile-flash-sale .flash-sale-container .visual {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	section.mobile-flash-sale .flash-sale-container .visual img {
+		width: 80%;
+		max-width: 200px;
+		display: block;
+		/* filter: invert(1); */
+	}
+
+	section.mobile-flash-sale .flash-sale-container .member-links {
+		margin: 10px auto 0;
+		display: flex;
+		gap: 20px;
+		position: relative;
+		z-index: 1;
+	}
+
+	section.mobile-flash-sale .flash-sale-container .member-links .underline-link {
 		margin: 0px auto 0;
 		padding: 0;
 		color: var(--signUp-text-color);
