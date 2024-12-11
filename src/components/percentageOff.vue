@@ -558,7 +558,7 @@ this.bannerConfig.formattedDate = formatted;
 
 	section.flash-sale .flash-sale-container p.selected-brands {
 		margin: 0 auto;
-		padding: 0;
+		padding: 5px 0 15px 0;
 		color: ${this.bannerConfig.customTextColor};
 		text-align: center;
 		font-family: Muli, arial, helvetica, sans-serif;
@@ -697,6 +697,7 @@ this.bannerConfig.formattedDate = formatted;
   height: 100%;
   z-index: 1;
  }
+  
   section.flash-sale .flash-sale-container .member-links {
 		margin: 10px auto 0;
 		display: flex;
@@ -729,10 +730,8 @@ this.bannerConfig.formattedDate = formatted;
 			${this.bannerConfig.customText ? `<p class="selected-brands">${this.bannerConfig.customText}</p>` : ''}
             <p class="end-date">${this.bannerConfig.customEndsText}</p>
             <div class="shop-buttons">
-             ${this.bannerConfig.shopText ? `<a href="${this.bannerConfig.shopLink}" class="button">${this.bannerConfig.shopText}</a>` : ''}
-             ${this.bannerConfig.shopTextt ? `<a href="${this.bannerConfig.shopLinkTwo}" class="button">${this.bannerConfig.shopTextt}</a>` : ''}
-
-			  
+             	${this.bannerConfig.shopText ? `<a href="${this.bannerConfig.shopLink}" class="button">${this.bannerConfig.shopText}</a>` : ''}
+             	${this.bannerConfig.shopTextt ? `<a href="${this.bannerConfig.shopLinkTwo}" class="button">${this.bannerConfig.shopTextt}</a>` : ''}
             </div>
 			<div class="member-links">
 				${this.bannerConfig.signUpLinkText ? `<a class="underline-link" href="${this.bannerConfig.signUpLinkUrl}">${this.bannerConfig.signUpLinkText}</a>` : '' }
