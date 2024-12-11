@@ -141,9 +141,9 @@
             v-model="image.link"
             placeholder="Link URL"
           />
-          <button @click.prevent="removeImage(index)">-</button>
+          <button :style="{ backgroundColor: 'red', margin: '10px' }" @click.prevent="removeImage(index)">- Remove Image</button>
         </div>
-        <button @click.prevent="addImage">+ Add Image</button>
+        <button :style="{margin: '10px'}" @click.prevent="addImage">+ Add Image</button>
 
 				<!-- T&Cs Editor -->
 				<div class="editable-fields">
