@@ -506,7 +506,7 @@ this.bannerConfig.formattedDate = formatted;
 		align-items: center;
 		justify-content: center;
 		background-repeat: no-repeat;
-		background-image: var(--bg-image);
+		
 		background-image: url(${this.bannerConfig.backgroundMobileImage});
 		background-size: cover;
 		background-position-y: 0;
