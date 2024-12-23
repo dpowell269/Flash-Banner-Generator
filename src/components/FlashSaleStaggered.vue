@@ -384,9 +384,9 @@ export default {
 		return {
 			preview: true,
 			bannerConfig: {
-				startDate: '2024-10-20',
+				startDate: '2024-12-22',
 				startTime: '17:00:00',
-				endDate: '2024-12-22',
+				endDate: '2025-12-31',
 				endTime: '09:00:00',
 				backgroundImage: 'https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png',
 				backgroundMobileImage: 'https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-staggered-gold.jpg',

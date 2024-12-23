@@ -61,11 +61,39 @@
 						<input type="color" v-model="bannerConfig.sharedStyles.titleColor" id="title-color" />
 					</div>
 
+					<!-- font sizes -->
+					<div class="label-input-group">
+  <label for="title-font-size">Title Font Size</label>
+  <input
+    type="number"
+    v-model="bannerConfig.sharedStyles.titleFontSize"
+    id="title-font-size"
+    min="8"
+    max="100"
+    step="1"
+  />
+</div>
+
+
+
 					<div class="label-input-group">
 						<label for="subtitle-color">Subtitle Color</label>
 						<input type="color" v-model="bannerConfig.sharedStyles.subtitleColor" id="subtitle-color" />
 					</div>
+					<div class="label-input-group">
+  <label for="subtitle-font-size">SubTitle Font Size</label>
+  <input
+    type="number"
+    v-model="bannerConfig.sharedStyles.subtitleFontSize"
+    id="subtitle-font-size"
+    min="8"
+    max="100"
+    step="1"
+  />
+</div>
 				</div>
+
+
 
 				<!--  selected brands -->
 				<div class="editable-fields">
@@ -220,12 +248,16 @@
 				>
 					<a :href="bannerConfig.backgroundLink" class="background-link"></a>
 					<div class="thresholds">
-						<h3 :style="{ color: bannerConfig.sharedStyles.subtitleColor }">
+						<h3 :style="{ color: bannerConfig.sharedStyles.subtitleColor,
+							fontSize: bannerConfig.sharedStyles.subtitleFontSize + 'px'
+						 }">
       {{ bannerConfig.thresholds[0].subtitle }}
     </h3>
   <div class="threshold">
 	
-    <h2 :style="{ color: bannerConfig.sharedStyles.titleColor }">
+    <h2 :style="{ color: bannerConfig.sharedStyles.titleColor,
+		fontSize: bannerConfig.sharedStyles.titleFontSize + 'px'
+	 }">
       {{ bannerConfig.thresholds[0].title }}
     </h2>
    
@@ -306,12 +338,16 @@
 				>
 					<a :href="bannerConfig.backgroundLink" class="background-link"></a>
 					<div class="thresholds">
-						<h3 :style="{ color: bannerConfig.sharedStyles.subtitleColor }">
+						<h3 :style="{ color: bannerConfig.sharedStyles.subtitleColor,
+							fontSize: bannerConfig.sharedStyles.subtitleFontSize + 'px'
+						 }">
       {{ bannerConfig.thresholds[0].subtitle }}
     </h3>
   <div class="threshold">
 	
-    <h2 :style="{ color: bannerConfig.sharedStyles.titleColor }">
+    <h2 :style="{ color: bannerConfig.sharedStyles.titleColor,
+		fontSize: bannerConfig.sharedStyles.titleFontSize + 'px'
+	 }">
       {{ bannerConfig.thresholds[0].title }}
     </h2>
    
@@ -389,9 +425,9 @@ export default {
 			preview: true,
 			bannerConfig: {
 				uniqueID: 'flash-sale',
-				startDate: '2024-10-20',
+				startDate: '2024-12-22',
 				startTime: '17:00:00',
-				endDate: '2024-12-22',
+				endDate: '2025-12-31',
 				endTime: '09:00:00',
 				backgroundImage: 'https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-BACKGROUND-DESKTOP.png',
 				backgroundMobileImage: 'https://media.theperfumeshop.com/pws/client/images/website/2024/black-friday/BF-staggered-gold.jpg',
@@ -421,6 +457,8 @@ export default {
 				sharedStyles: {
 					titleColor: '#ffffff', // Global title color
 					subtitleColor: '#ffffff', // Global subtitle color
+					titleFontSize: 48,
+					subtitleFontSize: 21,
 				},
 				customText: 'Selected Brands',
 				customTextColor: '#ffffff',
@@ -528,7 +566,7 @@ this.bannerConfig.formattedDate = formatted;
 		text-align: center;
 		box-sizing: border-box;
 		font-family: DIN Condensed, DIN Condensed Bold, system-ui;
-		font-size: 48px;
+		font-size: ${this.bannerConfig.sharedStyles.titleFontSize};
 		text-transform: uppercase;
 	}
 
@@ -540,9 +578,8 @@ this.bannerConfig.formattedDate = formatted;
 		text-align: center;
 		box-sizing: border-box;
 		font-family: Mark My Words Clean, system-ui;
-		font-size: 21px;
+		font-size: ${this.bannerConfig.sharedStyles.subtitleFontSize + 'px'};
 		font-weight: 400;
-        /* transform: rotate(-5deg); */
 	}
 
 	section.flash-sale .flash-sale-container p.end-date {
