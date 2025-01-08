@@ -594,7 +594,6 @@ this.bannerConfig.formattedDate = formatted;
 
 	section.flash-sale .flash-sale-container p.selected-brands {
 		margin: 0 auto;
-		padding: 5px 0 15px 0;
 		color: ${this.bannerConfig.customTextColor};
 		text-align: center;
 		font-family: Muli, arial, helvetica, sans-serif;
