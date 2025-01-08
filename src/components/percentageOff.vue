@@ -566,7 +566,7 @@ this.bannerConfig.formattedDate = formatted;
 		text-align: center;
 		box-sizing: border-box;
 		font-family: DIN Condensed, DIN Condensed Bold, system-ui;
-		font-size: ${this.bannerConfig.sharedStyles.titleFontSize};
+		font-size: ${this.bannerConfig.sharedStyles.titleFontSize}px;
 		text-transform: uppercase;
 	}
 
