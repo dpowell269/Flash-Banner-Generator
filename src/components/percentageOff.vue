@@ -263,7 +263,7 @@
    
   </div>
 </div>
-					<p :style="{color: bannerConfig.customTextColor}" class="selected-brands">{{ bannerConfig.customText }}</p>
+<p v-if="bannerConfig.customText" :style="{color: bannerConfig.customTextColor}" class="selected-brands">{{ bannerConfig.customText }}</p>
 					<p :style="{color: bannerConfig.customEndsColor}" class="end-date">{{ bannerConfig.customEndsText }}</p>
 					<div
   class="shop-buttons"
@@ -353,7 +353,7 @@
    
   </div>
 </div>
-					<p :style="{color: bannerConfig.customTextColor}" class="selected-brands">{{ bannerConfig.customText }}</p>
+<p v-if="bannerConfig.customText" :style="{color: bannerConfig.customTextColor}" class="selected-brands">{{ bannerConfig.customText }}</p>
 					<p :style="{color: bannerConfig.customEndsColor}" class="end-date">{{ bannerConfig.customEndsText }}</p>
 					<div
   class="shop-buttons"
@@ -583,7 +583,7 @@ this.bannerConfig.formattedDate = formatted;
 	}
 
 	section.flash-sale .flash-sale-container p.end-date {
-		margin: 0 auto;
+		margin: 10px auto 10px;
 		padding: 0;
 		color: ${this.bannerConfig.customEndsColor};
 		text-align: center;
@@ -621,7 +621,7 @@ this.bannerConfig.formattedDate = formatted;
 		padding: 10px 25px;
 		box-sizing: border-box;
 		text-align: center;
-		margin: 20px auto 0 auto;
+		margin: 0px auto 0 auto;
 		border-radius: 4px;
 		text-decoration: none;
 		color: ${this.bannerConfig.shopButtonStyles.textColor};
@@ -672,14 +672,15 @@ this.bannerConfig.formattedDate = formatted;
 	}
 
 	section.flash-sale .flash-sale-container .thresholds {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 20px;
+		display: flex;
+		flex-direction: column;
+		
 		width: 100%;
 		max-width: 650px;
 	}
 
 	section.flash-sale .flash-sale-container .thresholds .threshold {
+	margin-top: 15px;
 		animation-name: text-jump;
 		animation-duration: 4s;
 		animation-iteration-count: infinite;
@@ -693,11 +694,7 @@ this.bannerConfig.formattedDate = formatted;
 		animation-delay: 1s;
 	}
 
-	@media only screen and (min-width: 768px) {
-		section.flash-sale .flash-sale-container .thresholds {
-			grid-template-columns: 1fr;
-		}
-	}
+	
 
 	@keyframes text-jump {
 		0% {
@@ -882,7 +879,7 @@ section.flash-sale .flash-sale-container h3 {
 }
 
 section.flash-sale .flash-sale-container p.end-date {
-	margin: 20px auto 0;
+	margin: 10px auto 10px;
 	padding: 0;
 	color: #fff;
 	text-align: center;
@@ -914,7 +911,7 @@ section.flash-sale .flash-sale-container a.button {
 	padding: 10px 25px;
 	box-sizing: border-box;
 	text-align: center;
-	margin: 20px auto 0 auto;
+	margin: 0px auto 0 auto;
 	border-radius: 4px;
 	text-decoration: none;
 	color: var(--text-color);
@@ -965,14 +962,15 @@ section.flash-sale .flash-sale-container p.tcs {
 }
 
 section.flash-sale .flash-sale-container .thresholds {
-	display: grid;
-	grid-template-columns: 1fr;
-	gap: 20px;
+	display: flex;
+	flex-direction: column;
+	
 	width: 100%;
 	max-width: 650px;
 }
 
 section.flash-sale .flash-sale-container .thresholds .threshold {
+	margin-top: 15px;
 	animation-name: text-jump;
 	animation-duration: 4s;
 	animation-iteration-count: infinite;
@@ -986,11 +984,7 @@ section.flash-sale .flash-sale-container .thresholds .threshold:nth-of-type(3) {
 	animation-delay: 1s;
 }
 
-@media only screen and (min-width: 768px) {
-	section.flash-sale .flash-sale-container .thresholds {
-		grid-template-columns: 1fr;
-	}
-}
+
 
 @keyframes text-jump {
 	0% {
@@ -1108,7 +1102,7 @@ section.mobile-flash-sale .flash-sale-container h3 {
 }
 
 section.mobile-flash-sale .flash-sale-container p.end-date {
-	margin: 20px auto 0;
+	margin: 10px auto 10px;
 	padding: 0;
 	color: #fff;
 	text-align: center;
@@ -1140,7 +1134,7 @@ section.mobile-flash-sale .flash-sale-container a.button {
 	padding: 10px 25px;
 	box-sizing: border-box;
 	text-align: center;
-	margin: 20px auto 0 auto;
+	margin: 0px auto 0 auto;
 	border-radius: 4px;
 	text-decoration: none;
 	color: var(--text-color);
@@ -1191,14 +1185,15 @@ section.mobile-flash-sale .flash-sale-container p.tcs {
 }
 
 section.mobile-flash-sale .flash-sale-container .thresholds {
-	display: grid;
-	grid-template-columns: 1fr;
-	gap: 20px;
+	display: flex;
+	flex-direction: column;
+	
 	width: 100%;
 	max-width: 650px;
 }
 
 section.mobile-flash-sale .flash-sale-container .thresholds .threshold {
+	margin-top: 15px;
 	animation-name: text-jump;
 	animation-duration: 4s;
 	animation-iteration-count: infinite;
@@ -1212,11 +1207,7 @@ section.mobile-flash-sale .flash-sale-container .thresholds .threshold:nth-of-ty
 	animation-delay: 1s;
 }
 
-@media only screen and (min-width: 768px) {
-	section.mobile-flash-sale .flash-sale-container .thresholds {
-		grid-template-columns: unset;
-	}
-}
+
 
 @keyframes text-jump {
 	0% {
