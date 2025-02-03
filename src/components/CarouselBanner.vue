@@ -569,7 +569,7 @@ this.bannerConfig.formattedDate = formatted;
         justify-content: center;
         align-items: center;
 		background-repeat: no-repeat;
-		background-image: url(${this.bannerConfig.backgroundMobileImage});
+		background-image: url("${this.bannerConfig.backgroundMobileImage}");
 		background-size: cover;
 		background-position-y: 0;
 		position: relative;
@@ -581,7 +581,7 @@ this.bannerConfig.formattedDate = formatted;
 			background-size: cover;
 			background-position-y: 0px;
             grid-template-columns: 1fr 1.5fr;
-			background-image: url(${this.bannerConfig.backgroundImage});
+			background-image: url("${this.bannerConfig.backgroundImage}");
 		}
 	}
 
@@ -811,21 +811,18 @@ this.bannerConfig.formattedDate = formatted;
             <div class="carousel-center">
 				${this.bannerConfig.thresholds[0]?.subtitle ? `<h3>${this.bannerConfig.thresholds[0].subtitle}</h3>` : ''}
   
-   
-    <h2>${this.bannerConfig.thresholds[0]?.title || ''}</h2>
-
+   		   <h2>${this.bannerConfig.thresholds[0]?.title || ''}</h2>
 
 			${this.bannerConfig.customText ? `<p class="selected-brands">${this.bannerConfig.customText}</p>` : ''}
             <p class="end-date">${this.bannerConfig.customEndsText}</p>
-            
-              <div class="shop-buttons">
-             	${this.bannerConfig.shopText ? `<a href="${this.bannerConfig.shopLink}" class="button">${this.bannerConfig.shopText}</a>` : ''}
-             	${this.bannerConfig.shopTextt ? `<a href="${this.bannerConfig.shopLinkTwo}" class="button">${this.bannerConfig.shopTextt}</a>` : ''}
-            </div>
-			<div class="member-links">
-				${this.bannerConfig.signUpLinkText ? `<a class="underline-link" href="${this.bannerConfig.signUpLinkUrl}">${this.bannerConfig.signUpLinkText}</a>` : '' }
-				${this.bannerConfig.loginLinkText ? `<a class="underline-link" href="${this.bannerConfig.loginLinkUrl}">${this.bannerConfig.loginLinkText}</a>` : '' }
-			  </div>
+              	<div class="shop-buttons">
+             		${this.bannerConfig.shopText ? `<a href="${this.bannerConfig.shopLink}" class="button">${this.bannerConfig.shopText}</a>` : ''}
+             		${this.bannerConfig.shopTextt ? `<a href="${this.bannerConfig.shopLinkTwo}" class="button">${this.bannerConfig.shopTextt}</a>` : ''}
+                </div>
+			    <div class="member-links">
+					${this.bannerConfig.signUpLinkText ? `<a class="underline-link" href="${this.bannerConfig.signUpLinkUrl}">${this.bannerConfig.signUpLinkText}</a>` : '' }
+					${this.bannerConfig.loginLinkText ? `<a class="underline-link" href="${this.bannerConfig.loginLinkUrl}">${this.bannerConfig.loginLinkText}</a>` : '' }
+			  	</div>
              </div>
             <p class="tcs">${this.bannerConfig.termsAndConditions}</p>
          
@@ -845,19 +842,14 @@ this.bannerConfig.formattedDate = formatted;
         </div>
         </section>
 
-        <sc` +
-				`ript src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js">
-                </sc` +
-				`ript>
-<sc` +
-				`ript>
-      document.querySelector('section.flash-sale').parentNode.parentNode.parentNode.classList.add('full-width-force');
-	   document.querySelector('section.flash-sale').parentNode.parentNode.classList.add('full-width-force');
+<sc` + `ript src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js"></sc` + `ript>
+<sc` + `ript>
+      
 
-	function showComponentBetweenDates(startDate, startTime, endDate, endTime) {
+function showComponentBetweenDates(startDate, startTime, endDate, endTime) {
 		const now = new Date();
 		const start = new Date(startDate + 'T' + startTime);
-const end = new Date(endDate + 'T' + endTime);
+		const end = new Date(endDate + 'T' + endTime);
 
 		const component = document.getElementById('${this.bannerConfig.formattedDate}');
 
@@ -884,10 +876,9 @@ const end = new Date(endDate + 'T' + endTime);
 			pauseOnFocus: (boolean = false),
 		},
 	}).mount(window.splide.Extensions);
-  </sc` +
-				`ript>
-	
-      `;
+	document.querySelector('section.flash-sale').parentNode.parentNode.parentNode.classList.add('full-width-force');
+	   document.querySelector('section.flash-sale').parentNode.parentNode.classList.add('full-width-force');
+</sc` + `ript>`;
 			const blob = new Blob([html], {type: 'text/html'});
 			const link = document.createElement('a');
 			link.href = URL.createObjectURL(blob);
